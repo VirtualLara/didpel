@@ -1,0 +1,42 @@
+{
+  "expo": {
+    "name": "WECoM",
+    "slug": "WECoM",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#FFFFFF"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "firebase": {
+        "apiKey": "AIzaSyAcx705t0_Vd4Cd1u3OCQkBlr58gxOwaCU",
+        "authDomain": "wecom-cc348.firebaseapp.com",
+        "projectId": "wecom-cc348",
+        "storageBucket": "wecom-cc348.appspot.com",
+        "messagingSenderId": "548366103484",
+        "appId": "1:548366103484:web:23c4cc5ae68968b5f3f1b9"
+      }
+    }
+  }
+}
