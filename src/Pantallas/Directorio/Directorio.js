@@ -1,12 +1,38 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import React from 'react';
+import { StyleSheet, Text, View, StatusBar } from 'react-native';
+
+import { colorMarca } from '../../Utils/colores';
+import Busqueda from '../../Componentes/Busqueda';
 
 export default function Directorio() {
     return (
-        <View>
-            <Text> Aqui vamos a listar todas las empresas y/o usuarios registrados, como directorio telefónico </Text>
-        </View>
+        <View style={styles.frame} >
+        <StatusBar backgroundColor={colorMarca} />
+
+            <View style={styles.header} >
+                <Busqueda
+                    /*   setProductList={setProductList}
+                      actualizarProductos={actualizarProductos}
+                      setSearch={setSearch}
+                      search={search}
+                      setMensajes={setMensajes} */
+                    placeholder={'Buscar por nombre de anunciante'}
+                />
+            </View>
+    </View>
     )
 }
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    frame: {
+        flex: 1,
+        backgroundColor: '#fff'
+    },
+    header: {
+        height: '10%',
+        width: '100%',
+        backgroundColor: colorMarca,
+        alignContent: 'center',
+        justifyContent: 'center'
+    },
+})

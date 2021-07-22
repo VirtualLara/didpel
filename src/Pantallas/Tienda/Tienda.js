@@ -131,6 +131,7 @@ export default function Tienda() {
                 setSearch={setSearch}
                 search={search}
                 setMensajes={setMensajes}
+                placeholder={'Buscalo - Encuentralo - Adquierelo'}
               />
             </View>
 

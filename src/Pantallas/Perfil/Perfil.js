@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import { View, Text, StyleSheet, StatusBar, ScrollView } from "react-native";
+import { View, Text, StyleSheet, StatusBar, ScrollView, TouchableOpacity, Alert } from "react-native";
 import { useFocusEffect } from '@react-navigation/native';
 import { Icon, Avatar, Input } from 'react-native-elements';
 import CodeInput from 'react-native-confirmation-code-input';
@@ -265,6 +265,16 @@ export default function Perfil(props) {
           actualizarValor={actualizarValor}
           keyboardType={keyboardType}
         />
+
+<View style={{ height: 80, justifyContent: 'center', alignItems: 'center', paddingBottom: 20 }} >
+          <TouchableOpacity
+            style={{ height: 50, width: '90%', justifyContent: 'center', alignItems: 'center', backgroundColor: colorBotonMiTienda }}
+            onPress={() => { Alert.alert( 'Pronto se podran crear OFERTAS DE EMPLEO') }}
+          >
+            <Text style={{ fontSize: 18, color: '#fff', fontWeight: 'bold', textAlign: 'center', alignSelf: 'center' }} >Crear Oferta de Empleo</Text>
+          </TouchableOpacity>
+        </View>
+
         <ModalVerification
           isVisible={isVisible}
           setIsVisible={setIsVisible}

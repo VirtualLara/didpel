@@ -6,7 +6,7 @@ import { Buscar } from '../Utils/Acciones';
 
 export default function Busqueda(props) {
 
-  const { setProductList, actualizarProductos, setSearch, search, setMensajes, } = props;
+  const { setProductList, actualizarProductos, setSearch, search, setMensajes, placeholder } = props;
 
   useEffect(() => {
 
@@ -26,7 +26,7 @@ export default function Busqueda(props) {
 
   return (
     <SearchBar
-      placeholder='Buscalo, encuentralo y adquierelo...'
+      placeholder={placeholder}
       containerStyle={{ backgroundColor: 'transparent', borderTopColor: 'transparent', borderBottomColor: 'transparent' }}
       inputContainerStyle={{ backgroundColor: '#fff', alignItems: 'center' }}
       inputStyle={{ fontFamily: 'Roboto', fontSize: 15 }}
