@@ -14,8 +14,7 @@ import Loading from '../../Componentes/Loading';
 export default function Tienda() {
 
   const navigation = useNavigation();
-  const { photoURL } = obtenerUsuario();
-  const [productList, setProductList] = useState([]);
+  const [list, setList] = useState([]);
   const [search, setSearch] = useState('');
   const [mensajes, setMensajes] = useState('Cargando...');
   const [notificaciones, setNotificaciones] = useState(0);
@@ -25,7 +24,7 @@ export default function Tienda() {
   useFocusEffect(
     useCallback(() => {
       (async () => {
-        setProductList(await listarProductos());
+        setList(await listarProductos());
       })()
     }, [])
   );
@@ -35,7 +34,7 @@ export default function Tienda() {
     setLoading(true);
 
     const listaProductosCategoria = await listarProductosPorCategoria(categoria);
-    setProductList(listaProductosCategoria);
+    setList(listaProductosCategoria);
 
     if (listaProductosCategoria.length === 0) {
       setMensajes('No se encontraron datos para la categoría ' + categoria)
@@ -47,7 +46,7 @@ export default function Tienda() {
 
   const actualizarProductos = async () => {
     setLoading(true);
-    setProductList(await listarProductos());
+    setList(await listarProductos());
     setLoading(false);
   }
 
@@ -126,12 +125,13 @@ export default function Tienda() {
 
             <View style={{ width: '85%' }}  >
               <Busqueda
-                setProductList={setProductList}
-                actualizarProductos={actualizarProductos}
+                setList={setList}
+                actualizar={actualizarProductos}
                 setSearch={setSearch}
                 search={search}
                 setMensajes={setMensajes}
                 placeholder={'Buscalo - Encuentralo - Adquierelo'}
+                query={`SELECT * FROM Productos WHERE titulo LIKE '${search}%' OR descripcion LIKE '${search}%'`}
               />
             </View>
 
@@ -219,9 +219,9 @@ export default function Tienda() {
 
 
       {
-        size(productList) > 0 ? (
+        size(list) > 0 ? (
           <FlatList
-            data={productList}
+            data={list}
             renderItem={(producto) => (
               <Producto producto={producto} navigation={navigation} />
             )}

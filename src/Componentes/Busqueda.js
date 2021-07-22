@@ -6,7 +6,7 @@ import { Buscar } from '../Utils/Acciones';
 
 export default function Busqueda(props) {
 
-  const { setProductList, actualizarProductos, setSearch, search, setMensajes, placeholder } = props;
+  const { setList, actualizar, setSearch, search, setMensajes, placeholder, query } = props;
 
   useEffect(() => {
 
@@ -14,8 +14,8 @@ export default function Busqueda(props) {
 
     if (search) {
       (async () => {
-        resultado = await Buscar(search);
-        setProductList(resultado);
+        resultado = await Buscar(query);
+        setList(resultado);
 
         if (resultado.length === 0) {
           setMensajes('Nose encontraron resultados para ' + search)
@@ -34,8 +34,8 @@ export default function Busqueda(props) {
       value={search}
       onClear={() => {
         setSearch('');
-        setProductList([]);
-        actualizarProductos()
+        setList([]);
+        actualizar()
       }}
     />
   )

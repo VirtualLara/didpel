@@ -8,7 +8,7 @@ import uuid from 'random-uuid-v4';
 import { map } from 'lodash';
 import { FireSQL } from 'firesql';
 
-import { convertirFicheroBlob } from './Utils';
+import { convertirFicheroBlob, sumarDias } from './Utils';
 
 const db = firebase.firestore(firebaseapp);
 const fireSQL = new FireSQL(firebase.firestore(), { includeId: 'id' })
@@ -347,15 +347,46 @@ export const listarProductosPorCategoria = async (categoria) => {
 
 }
 
-export const Buscar = async (search) => {
-    let productos = [];
+export const Buscar = async (query) => {
+    let result = [];
 
     await fireSQL
-        .query(`SELECT * FROM Productos WHERE titulo LIKE '${search}%' OR descripcion LIKE '${search}%' `)
-        //.query(`SELECT * FROM Productos WHERE descripcion IN ( '${search}')`)
+        .query(`${query}`)
         .then((response) => {
-            productos = response;
+            result = response;
         });
 
-    return productos;
+    return result;
+}
+
+export const listarVacantes = async () => {
+    const vacantesList = [];
+    let index = 0;
+    let fecha = sumarDias(new Date(), 4)
+
+    console.log(fecha)
+
+    await db.collection('Vacantes')
+        .where('status', '==', 1)
+        //.where('fechavigencia', "<", `${fecha}`)
+        .get()
+        .then((response) => {
+            response.forEach((doc) => {
+                const vacante = doc.data();
+                vacante.id = doc.id;
+
+                vacantesList.push(vacante)
+            })
+        })
+        .catch(err => console.log(err))
+
+    for (const registro of vacantesList) {
+
+        const usuario = await obtenerRegistroXID('Usuarios', registro.usuario)
+        vacantesList[index].usuario = usuario.data;
+        index++;
+    }
+
+    return vacantesList;
+
 }

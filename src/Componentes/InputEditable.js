@@ -64,11 +64,11 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingBottom: 10
+    //paddingBottom: 10
   },
   label: {
     fontWeight: 'bold',
-    marginBottom: 10,
+    //marginBottom: 10,
     color: colorMarca,
     fontSize: 16
   },
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#cecece',
     borderBottomWidth: 1,
     width: '100%',
-    marginBottom: 10,
+    marginBottom: 5,
     paddingHorizontal: 10,
   },
 })

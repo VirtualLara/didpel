@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { View, Text, StyleSheet, StatusBar, ScrollView, TouchableOpacity, Alert } from "react-native";
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { Icon, Avatar, Input } from 'react-native-elements';
 import CodeInput from 'react-native-confirmation-code-input';
 import FirebaseRecaptcha from '../../Utils/FirebaseRecaptcha';
@@ -17,6 +17,8 @@ import InputEditable from '../../Componentes/InputEditable';
 import Modal from '../../Componentes/Modal';
 
 export default function Perfil(props) {
+
+  const navigation = useNavigation();
 
   const [imagenPerfil, setImagenPerfil] = useState('');
   const [loading, setLoading] = useState(false);
@@ -266,10 +268,10 @@ export default function Perfil(props) {
           keyboardType={keyboardType}
         />
 
-<View style={{ height: 80, justifyContent: 'center', alignItems: 'center', paddingBottom: 20 }} >
+        <View style={{ height: 80, justifyContent: 'center', alignItems: 'center', paddingBottom: 20 }} >
           <TouchableOpacity
             style={{ height: 50, width: '90%', justifyContent: 'center', alignItems: 'center', backgroundColor: colorBotonMiTienda }}
-            onPress={() => { Alert.alert( 'Pronto se podran crear OFERTAS DE EMPLEO') }}
+            onPress={() => { navigation.navigate('AgregarVacante') }}
           >
             <Text style={{ fontSize: 18, color: '#fff', fontWeight: 'bold', textAlign: 'center', alignSelf: 'center' }} >Crear Oferta de Empleo</Text>
           </TouchableOpacity>
