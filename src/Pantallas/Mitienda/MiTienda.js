@@ -57,7 +57,7 @@ export default function MiTienda() {
         color={colorMarca}
         containerStyle={styles.containerBtn}
         onPress={() => {
-          if (!datosUser.publicacionesrestantes > 0) {
+          if (datosUser.data.publicacionesRestantes > 0) {
             navigation.navigate('AgregarProducto')
           } else {
             Alert.alert('Publicaciones agotadas',

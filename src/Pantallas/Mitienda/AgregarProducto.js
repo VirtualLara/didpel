@@ -50,10 +50,14 @@ export default function AgregarProducto() {
   }
 
   const actualizarPublicacionesRestantes = async () => {
-    let info = await obtenerRegistroXID('Usuarios', obtenerUsuario().uid)
-    const { publicacionesCompradas, publicacionesRealizadas, } = info.data;
+
+    let infoDos = await await obtenerRegistroXID('Usuarios', obtenerUsuario().uid)
+    const { publicacionesCompradas, publicacionesRealizadas } = infoDos.data;
     addRegisterEspecifico('Usuarios', obtenerUsuario().uid, { publicacionesRestantes: publicacionesCompradas - publicacionesRealizadas })
+
   }
+
+  actualizarPublicacionesRestantes();
 
   const addProduct = async () => {
     setErrores({});
@@ -112,14 +116,16 @@ export default function AgregarProducto() {
       if (registrarProducto.statusresponse) {
         setLoading(false)
         actualizarPublicacionesRealizadas();
-        actualizarPublicacionesRestantes();
         Alert.alert('Registro Exitoso',
           'El producto o Servicio se registro de forma correcta',
           [
             {
               styles: 'cancel',
               text: 'Aceptar',
-              onPress: () => navigation.navigate('Mitienda')
+              onPress: () => {
+                actualizarPublicacionesRestantes()
+                navigation.navigate('Mitienda')
+              }
             }
           ]
         )

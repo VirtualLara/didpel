@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import { View, Text, StyleSheet, Image, Alert } from "react-native";
 import CodeInput from 'react-native-confirmation-code-input';
 import { useNavigation } from '@react-navigation/native';
-import { colorMarca } from '../../Utils/colores';
+import { colorMarca, publicacionesIniciales } from '../../Utils/colores';
 
 import Loading from '../../Componentes/Loading';
 import { confirmarCodigo, obtenerToken, obtenerUsuario, addRegisterEspecifico, } from '../../Utils/Acciones';
@@ -31,9 +31,9 @@ export default function ConfirmarNumero(props) {
         colonia: '',
         ciudad: '',
         ocupacion: '',
-        publicacionesCompradas: 4,
+        publicacionesCompradas: publicacionesIniciales,
         publicacionesRealizadas: 0,
-        publicacionesRestantes: 4,
+        publicacionesRestantes: publicacionesIniciales,
         permiso: true,
       })
       setLoading(false)
