@@ -3,20 +3,22 @@ import { View, Text, StatusBar, StyleSheet, FlatList, Image } from "react-native
 import { Icon } from 'react-native-elements';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 
-import { colorMarca, textSemiAzul, colorBotonMiTienda } from '../../Utils/colores';
-import { listarMisProductos, actualizarRegistro, eliminarProducto } from '../../Utils/Acciones';
+import { colorMarca, colorBotonMiTienda } from '../../Utils/colores';
+import { listarMisProductos, actualizarRegistro, eliminarProducto, obtenerRegistroXID, obtenerUsuario } from '../../Utils/Acciones';
 import { formatoMoneda } from '../../Utils/Utils';
 import { Alert } from "react-native";
 
 export default function MiTienda() {
 
   const [productos, setProductos] = useState({});
+  const [datosUser, setDatosUser] = useState(null);
   const navigation = useNavigation();
 
   useFocusEffect(
     useCallback(() => {
       (async () => {
         setProductos(await listarMisProductos())
+        setDatosUser(await obtenerRegistroXID('Usuarios', obtenerUsuario().uid))
       })()
     }, [])
   );
@@ -54,7 +56,21 @@ export default function MiTienda() {
         type='material-community'
         color={colorMarca}
         containerStyle={styles.containerBtn}
-        onPress={() => { navigation.navigate('AgregarProducto') }}
+        onPress={() => {
+          if (!datosUser.publicacionesrestantes > 0) {
+            navigation.navigate('AgregarProducto')
+          } else {
+            Alert.alert('Publicaciones agotadas',
+              'Debe adquirir una suscripción para seguir publicando.',
+              [
+                {
+                  text: 'Entendido',
+                  style: 'Cancel',
+                }
+              ]
+            )
+          }
+        }}
         reverse
       />
     </View>

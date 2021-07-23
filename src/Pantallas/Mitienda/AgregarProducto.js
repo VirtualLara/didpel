@@ -1,14 +1,14 @@
-import React, { useState, useRef } from "react";
+import React, { useState, } from "react";
 import { View, Text, StyleSheet, Alert, TouchableOpacity, ScrollView, CheckBox, } from "react-native";
-import { Input, Image, Button, Icon, Avatar, AirbnbRating } from 'react-native-elements';
-import { map, size, filter, isEmpty, result, subtract } from 'lodash';
-import { useNavigation } from '@react-navigation/native';
+import { Input, Button, Icon, Avatar, AirbnbRating } from 'react-native-elements';
+import { map, size, filter, isEmpty, } from 'lodash';
+import { useNavigation, } from '@react-navigation/native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import Loading from '../../Componentes/Loading';
 import { colorBotonMiTienda, colorMarca, textSemiAzul, textWarning } from '../../Utils/colores';
 import { cargarImagen, sumarDias } from '../../Utils/Utils';
-import { subirImagenesBatch, addRegistro, obtenerUsuario } from '../../Utils/Acciones';
+import { subirImagenesBatch, addRegistro, obtenerUsuario, obtenerRegistroXID, addRegisterEspecifico } from '../../Utils/Acciones';
 
 export default function AgregarProducto() {
 
@@ -23,7 +23,6 @@ export default function AgregarProducto() {
   const [rating, setRating] = useState(5);
   const [loading, setLoading] = useState(false);
   const [seleccion, setSeleccion] = useState(false);
-  const btnref = useRef();
 
   const navigation = useNavigation();
 
@@ -42,6 +41,18 @@ export default function AgregarProducto() {
 
   function formatoMoneda(num) {
     return '$' + num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+  }
+
+  const actualizarPublicacionesRealizadas = async () => {
+    let info = await obtenerRegistroXID('Usuarios', obtenerUsuario().uid)
+    const { publicacionesRealizadas, } = info.data;
+    addRegisterEspecifico('Usuarios', obtenerUsuario().uid, { publicacionesRealizadas: publicacionesRealizadas + 1 })
+  }
+
+  const actualizarPublicacionesRestantes = async () => {
+    let info = await obtenerRegistroXID('Usuarios', obtenerUsuario().uid)
+    const { publicacionesCompradas, publicacionesRealizadas, } = info.data;
+    addRegisterEspecifico('Usuarios', obtenerUsuario().uid, { publicacionesRestantes: publicacionesCompradas - publicacionesRealizadas })
   }
 
   const addProduct = async () => {
@@ -100,6 +111,8 @@ export default function AgregarProducto() {
 
       if (registrarProducto.statusresponse) {
         setLoading(false)
+        actualizarPublicacionesRealizadas();
+        actualizarPublicacionesRestantes();
         Alert.alert('Registro Exitoso',
           'El producto o Servicio se registro de forma correcta',
           [
@@ -212,7 +225,6 @@ export default function AgregarProducto() {
       <Button
         title='Agregar Nuevo Producto o Servicio'
         buttonStyle={styles.btnAddNew}
-        ref={btnref}
         onPress={addProduct}
       />
 

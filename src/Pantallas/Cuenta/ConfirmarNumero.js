@@ -31,6 +31,9 @@ export default function ConfirmarNumero(props) {
         colonia: '',
         ciudad: '',
         ocupacion: '',
+        publicacionesCompradas: 4,
+        publicacionesRealizadas: 0,
+        publicacionesRestantes: 4,
         permiso: true,
       })
       setLoading(false)

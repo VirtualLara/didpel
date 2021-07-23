@@ -1,11 +1,11 @@
 import React, { useState, useCallback } from "react";
-import { View, Text, StatusBar, StyleSheet, Alert, FlatList, Dimensions, TouchableOpacity } from "react-native";
-import { Icon, Avatar, Image, Rating, Badge } from 'react-native-elements';
+import { View, Text, StatusBar, StyleSheet, Alert, FlatList, Linking } from "react-native";
+import { Icon, Avatar, } from 'react-native-elements';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { size } from 'lodash';
 
-import { listarVacantes, obtenerUsuario, istarProductosPorCategoria } from '../../Utils/Acciones';
+import { listarVacantes, obtenerUsuario, } from '../../Utils/Acciones';
 import { formatoMoneda } from '../../Utils/Utils';
 import { colorMarca, colorBotonMiTienda } from '../../Utils/colores';
 import Busqueda from '../../Componentes/Busqueda';
@@ -36,15 +36,12 @@ export default function Vacantes() {
     }
 
     function Vacante(props) {
-        const { vacante, navigation } = props;
-        const { titulo, descripcion, salario, colonia, ciudad, id, usuario, } = vacante.item;
-        const { displayName, photoURL } = usuario;
+        const { vacante } = props;
+        const { titulo, descripcion, salario, colonia, ciudad, usuario, fechacreacion, fechavigencia } = vacante.item;
+        const { displayName, photoURL, phoneNumber } = usuario;
 
         return (
-            <TouchableOpacity
-                style={styles.card}
-                onPress={() => { navigation.navigate('Detalle', { id, titulo }) }}
-            >
+            <View style={styles.card}            >
                 <View style={styles.infoBox} >
 
                     <Text style={styles.titulo} >{titulo}</Text>
@@ -57,6 +54,7 @@ export default function Vacantes() {
                     </View>
 
                     <Text style={styles.publicadaPor} >Publicada por:</Text>
+
                     <View style={styles.avatarBox} >
                         <Avatar
                             source={photoURL ? { uri: photoURL } : require('../../../assets/avatar.jpg')}
@@ -72,13 +70,17 @@ export default function Vacantes() {
                             color={colorBotonMiTienda}
                             size={40}
                             onPress={() => {
-                                Alert.alert('Pronto podras contactar por whastapp al anunciante')
+                                let mensaje = `Hola, me interesa la vancante de ${titulo} publicada en la aplicaion DIDPEL. Me puede brindar más informes por favor.`;
+                                Linking.openURL(`whatsapp://send?text=${mensaje}&phone=${phoneNumber}`);
                             }}
+                            iconStyle={{ position: 'relative', }}
                         />
                     </View>
 
+
+
                 </View>
-            </TouchableOpacity>
+            </View>
         )
     }
 
@@ -159,6 +161,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
     },
     infoBox: {
+        width: '100%',
         paddingLeft: 10,
         //alignItems: 'center',
         flex: 1,
@@ -184,6 +187,7 @@ const styles = StyleSheet.create({
     avatarBox: {
         flexDirection: 'row',
         alignItems: 'center',
+        justifyContent: 'space-around',
         marginTop: 5,
     },
     avatar: {

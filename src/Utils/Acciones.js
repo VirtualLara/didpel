@@ -362,13 +362,9 @@ export const Buscar = async (query) => {
 export const listarVacantes = async () => {
     const vacantesList = [];
     let index = 0;
-    let fecha = sumarDias(new Date(), 4)
-
-    console.log(fecha)
 
     await db.collection('Vacantes')
         .where('status', '==', 1)
-        //.where('fechavigencia', "<", `${fecha}`)
         .get()
         .then((response) => {
             response.forEach((doc) => {
@@ -388,5 +384,33 @@ export const listarVacantes = async () => {
     }
 
     return vacantesList;
+
+}
+
+export const listarAnunciantes = async () => {
+    const anunciantesList = [];
+    let index = 0;
+
+    await db.collection('Usuarios')
+        .where('status', '==', 1)
+        .get()
+        .then((response) => {
+            response.forEach((doc) => {
+                const producto = doc.data();
+                producto.id = doc.id;
+
+                productosList.push(producto)
+            })
+        })
+        .catch(err => console.log(err))
+
+    for (const registro of productosList) {
+
+        const usuario = await obtenerRegistroXID('Usuarios', registro.usuario)
+        productosList[index].usuario = usuario.data;
+        index++;
+    }
+
+    return productosList;
 
 }
