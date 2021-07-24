@@ -6,7 +6,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { size } from 'lodash';
 
 import { colorBotonMiTienda, colorMarca } from '../../Utils/colores';
-import { listarProductos, obtenerUsuario, listarProductosPorCategoria } from '../../Utils/Acciones';
+import { listarProductos, obtenerUsuario, listarProductosPorCategoria, listarNotificaciones } from '../../Utils/Acciones';
 import { formatoMoneda } from '../../Utils/Utils';
 import Busqueda from '../../Componentes/Busqueda';
 import Loading from '../../Componentes/Loading';
@@ -24,7 +24,13 @@ export default function Tienda() {
   useFocusEffect(
     useCallback(() => {
       (async () => {
+        setNotificaciones(0)
         setList(await listarProductos());
+
+        const consulta = await listarNotificaciones();
+        if (consulta.statusresponse) {
+          setNotificaciones(size(consulta.data))
+        }
       })()
     }, [])
   );
@@ -141,13 +147,15 @@ export default function Tienda() {
                 name='bell-outline'
                 color='#fff'
                 size={30}
-                onPress={() => { Alert.alert('Apenas estan programandome..') }}
+                onPress={() => {navigation.navigate('Mensajes')}}
               />
+              { notificaciones > 0 && ( 
               <Badge
                 status='error'
                 containerStyle={{ position: 'absolute', top: -4, right: -4 }}
-                value={2}
+                value={notificaciones}
               />
+              )}
             </View>
 
           </View>
