@@ -3,10 +3,10 @@ import { View, Text, StatusBar, StyleSheet, Alert, FlatList, Linking } from "rea
 import { Icon, Avatar, } from 'react-native-elements';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { size } from 'lodash';
+import { size, upperCase } from 'lodash';
 
 import { listarVacantes, obtenerUsuario, } from '../../Utils/Acciones';
-import { formatoMoneda } from '../../Utils/Utils';
+import { formatoMoneda, enviarMensajeWhastapp } from '../../Utils/Utils';
 import { colorMarca, colorBotonMiTienda } from '../../Utils/colores';
 import Busqueda from '../../Componentes/Busqueda';
 import Loading from '../../Componentes/Loading';
@@ -70,8 +70,8 @@ export default function Vacantes() {
                             color={colorBotonMiTienda}
                             size={40}
                             onPress={() => {
-                                let mensaje = `Hola, me interesa la vancante de ${titulo} publicada en la aplicaion DIDPEL. Me puede brindar más informes por favor.`;
-                                Linking.openURL(`whatsapp://send?text=${mensaje}&phone=${phoneNumber}`);
+                                let mensaje = `Estimad@, me interesa la vancante de ${upperCase(titulo)} publicada en la aplicación DIDPEL. Me puede brindar más informes por favor.`;
+                                enviarMensajeWhastapp(phoneNumber, mensaje)
                             }}
                             iconStyle={{ position: 'relative', }}
                         />

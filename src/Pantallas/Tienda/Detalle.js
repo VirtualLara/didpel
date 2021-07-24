@@ -8,7 +8,7 @@ import {
   Alert,
 } from "react-native";
 import { Avatar, Input, Button, Rating } from "react-native-elements";
-import { size } from "lodash";
+import { size, upperCase } from "lodash";
 
 import {
   addRegistro,
@@ -17,7 +17,7 @@ import {
   sendPushNotification,
   setMensajeNotificacion,
 } from "../../Utils/Acciones";
-import { formatoMoneda } from "../../Utils/Utils";
+import { formatoMoneda, enviarMensajeWhastapp } from "../../Utils/Utils";
 import {
   colorMarca,
   colorBotonMiTienda,
@@ -143,9 +143,8 @@ export default function Detalle(props) {
                   color={colorBotonMiTienda}
                   size={50}
                   onPress={() => {
-                    Alert.alert(
-                      "Pronto podras contactar por whastapp al anunciante"
-                    );
+                    const mensajeWhastApp = `Estimad@ ${nombreVendedor}, mi nombre es ${usuarioActual.displayName}, me interesa el producto ${upperCase(producto.titulo)} que se encuentra publicado en la aplicación DIDPEL.`;
+                    enviarMensajeWhastapp(phoneVendedor, mensajeWhastApp);
                   }}
                 />
               </View>
@@ -216,7 +215,7 @@ function EnviarMensaje(props) {
       if (resultado.statusresponse) {
         const mensajeNotificacion = setMensajeNotificacion(
           token,
-          `CLIENTE INTERESADO - ${producto.titulo}`,
+          `CLIENTE INTERESADO EN: ${producto.titulo}`,
           `${nombrecliente} te ha enviado un mensaje.`,
           { data: "Prospecto interesado." }
         );

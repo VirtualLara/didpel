@@ -17,4 +17,4 @@ export const myBackgoroundColor = '#EAECEE';
 
 
 //variable de publicaciones
-export const publicacionesIniciales = 8;
+export const publicacionesIniciales = 6;

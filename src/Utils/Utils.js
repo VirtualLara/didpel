@@ -1,4 +1,6 @@
 import * as ImagePicker from 'expo-image-picker';
+import { size } from 'lodash';
+import { Alert, Linking } from 'react-native';
 
 export const validaremail = (text) => {
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -43,4 +45,16 @@ export const sumarDias = (fecha, dias) => {
 
 export function formatoMoneda(num) {
     return '$' + num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+}
+
+export const enviarMensajeWhastapp = (numero, mensaje) => {
+    let link = `whatsapp://send?phone=${numero.substring(1, size(numero))}&text=${mensaje}`;
+    Linking.canOpenURL(link)
+        .then((supported) => {
+            if (!supported) {
+                Alert.alert('Debe tener instalada la aplicación de WhastApp para poder enviar un mensaje directo')
+            } else {
+                return Linking.openURL(link);
+            }
+        })
 }
