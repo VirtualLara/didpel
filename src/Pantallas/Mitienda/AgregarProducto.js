@@ -4,6 +4,7 @@ import { Input, Button, Icon, Avatar, AirbnbRating } from 'react-native-elements
 import { map, size, filter, isEmpty, } from 'lodash';
 import { useNavigation, } from '@react-navigation/native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import moment from 'moment/min/moment-with-locales'
 
 import Loading from '../../Componentes/Loading';
 import { colorBotonMiTienda, colorMarca, textSemiAzul, textWarning } from '../../Utils/colores';
@@ -25,6 +26,7 @@ export default function AgregarProducto() {
   const [seleccion, setSeleccion] = useState(false);
 
   const navigation = useNavigation();
+  moment.locale('es');
 
   const vigenciaDias = (val) => {
     let numDias = 0;
@@ -105,8 +107,9 @@ export default function AgregarProducto() {
         usuario: obtenerUsuario().uid,
         imagenes: urlImagenes,
         status: 1,
-        fechacreacion: new Date(),
-        fechavigencia: vigenciaDias(seleccion),
+        fechacreacion: moment(new Date()).format("MMM Do YY"),
+        fechavigencia: moment(vigenciaDias(seleccion)).format("MMM Do YY"),
+        //fechavigencia: vigenciaDias(seleccion),
         rating,
         categoria,
       }

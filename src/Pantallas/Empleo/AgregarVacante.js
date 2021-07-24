@@ -4,6 +4,7 @@ import { Input, Image, Button, Icon, Avatar, AirbnbRating } from 'react-native-e
 import { map, size, filter, isEmpty, result, subtract } from 'lodash';
 import { useNavigation } from '@react-navigation/native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import moment from 'moment/min/moment-with-locales'
 
 import Loading from '../../Componentes/Loading';
 import { colorBotonMiTienda, colorMarca, textSemiAzul, textWarning } from '../../Utils/colores';
@@ -22,6 +23,7 @@ export default function AgregarVacante() {
     const [seleccion, setSeleccion] = useState(true);
 
     const navigation = useNavigation();
+    moment.locale('es');
 
     const validarStatus = () => {
         if (seleccion) {
@@ -66,8 +68,8 @@ export default function AgregarVacante() {
                 ciudad,
                 usuario: obtenerUsuario().uid,
                 status: validarStatus(),
-                fechacreacion: new Date(),
-                fechavigencia: vigenciaDias(3),
+                fechacreacion: moment(new Date()).format("MMM Do YY"),
+                fechavigencia: moment(sumarDias(new Date(), 1)).format("MMM Do YY"),
             }
 
             const registrarOfertaEmpleo = await addRegistro('Vacantes', empleo);

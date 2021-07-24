@@ -7,6 +7,9 @@ import "firebase/firestore";
 import uuid from "random-uuid-v4";
 import { map } from "lodash";
 import { FireSQL } from "firesql";
+import moment from 'moment/min/moment-with-locales'
+
+moment.locale('es');
 
 import { convertirFicheroBlob, sumarDias } from "./Utils";
 
@@ -354,7 +357,18 @@ export const listarProductos = async () => {
   await db
     .collection("Productos")
     .where("status", "==", 1)
-    //.where('fechavigencia', '==', (new Date().getTime).toString())
+    .where('fechavigencia', 'in', [
+      moment(new Date()).format("MMM Do YY"),
+      moment(sumarDias(new Date(), 1)).format("MMM Do YY"),
+      moment(sumarDias(new Date(), 2)).format("MMM Do YY"),
+      moment(sumarDias(new Date(), 3)).format("MMM Do YY"),
+      moment(sumarDias(new Date(), 4)).format("MMM Do YY"),
+      moment(sumarDias(new Date(), 5)).format("MMM Do YY"),
+      moment(sumarDias(new Date(), 6)).format("MMM Do YY"),
+      moment(sumarDias(new Date(), 7)).format("MMM Do YY"),
+      moment(sumarDias(new Date(), 8)).format("MMM Do YY"),
+      moment(sumarDias(new Date(), 9)).format("MMM Do YY"),
+    ])
     .get()
     .then((response) => {
       response.forEach((doc) => {
@@ -421,6 +435,12 @@ export const listarVacantes = async () => {
   await db
     .collection("Vacantes")
     .where("status", "==", 1)
+    //.where('fechavigencia', '==', moment(new Date()).subtract(10, 'days').calendar())
+    //.where('fechavigencia', '==', moment(sumarDias(new Date(), 1)).subtract(10, 'days').calendar())
+    .where('fechavigencia', 'in', [
+      moment(new Date()).format("MMM Do YY"),
+      moment(sumarDias(new Date(), 1)).format("MMM Do YY"),
+    ])
     .get()
     .then((response) => {
       response.forEach((doc) => {

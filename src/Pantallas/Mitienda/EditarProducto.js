@@ -222,7 +222,6 @@ export default function AgregarProducto(props) {
       <Button
         title='Editar Producto o Servicio'
         buttonStyle={styles.btnAddNew}
-        ref={btnref}
         onPress={EditProduct}
       />
 
