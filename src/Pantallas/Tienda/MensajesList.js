@@ -10,7 +10,7 @@ import { Avatar } from "react-native-elements";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import moment from 'moment/min/moment-with-locales'
 
-import { listarNotificaciones } from "../../Utils/Acciones";
+import { listarNotificaciones, actualizarRegistro } from "../../Utils/Acciones";
 import { colorBotonMiTienda } from "../../Utils/colores";
 import { TouchableOpacityComponent } from "react-native";
 
@@ -23,7 +23,7 @@ export default function MensajesList() {
   moment.locale('es');
 
   useFocusEffect(
-    useCallback( () => {
+    useCallback(() => {
       (async () => {
         const consulta = await listarNotificaciones();
         if (consulta.statusresponse) {
@@ -32,19 +32,8 @@ export default function MensajesList() {
           setMensaje("No se econtraron mesajes por notificaciones...");
         }
       })();
-    },[])
+    }, [])
   )
-
-/*   useEffect(() => {
-    (async () => {
-      const consulta = await listarNotificaciones();
-      if (consulta.statusresponse) {
-        setNotificaciones(consulta.data);
-      } else {
-        setMensaje("No se econtraron mesajes por notificaciones...");
-      }
-    })();
-  }, []); */
 
   if (!notificaciones) {
     return (
@@ -92,6 +81,8 @@ function Notificacion(props) {
           photoURL,
           email,
         });
+        console.log(notificacion)
+        actualizarRegistro('Notificaciones', notificacion.item.id, { visto: 1 })
       }}
     >
       <View style={styles.container}>
@@ -108,12 +99,12 @@ function Notificacion(props) {
           />
         </View>
 
-        <View style={{width: '90%'}} >
+        <View style={{ width: '90%' }} >
           <Text style={{ fontWeight: "bold" }}>{displayName}
-          <Text style={{ fontWeight: "normal" }}> Te ha enviado un mensaje para el producto </Text>
-          <Text style={{ fontWeight: "bold" }}>{productotitulo}</Text>
-        </Text>
-          <Text style={{ fontSize:16, color: colorBotonMiTienda, fontWeight:'bold' }} >Enviado: {moment(fechacreacion.toDate()).startOf('hour').fromNow()}</Text>
+            <Text style={{ fontWeight: "normal" }}> Te ha enviado un mensaje para el producto </Text>
+            <Text style={{ fontWeight: "bold" }}>{productotitulo}</Text>
+          </Text>
+          <Text style={{ fontSize: 16, color: colorBotonMiTienda, fontWeight: 'bold' }} >Enviado: {moment(fechacreacion.toDate()).startOf('hour').fromNow()}</Text>
         </View>
       </View>
     </TouchableOpacity>

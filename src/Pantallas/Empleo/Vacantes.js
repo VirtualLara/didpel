@@ -7,7 +7,7 @@ import { size, upperCase } from 'lodash';
 
 import { listarVacantes, obtenerUsuario, } from '../../Utils/Acciones';
 import { formatoMoneda, enviarMensajeWhastapp } from '../../Utils/Utils';
-import { colorMarca, colorBotonMiTienda } from '../../Utils/colores';
+import { colorMarca, colorBotonMiTienda, nombreApp } from '../../Utils/colores';
 import Busqueda from '../../Componentes/Busqueda';
 import Loading from '../../Componentes/Loading';
 
@@ -70,7 +70,7 @@ export default function Vacantes() {
                             color={colorBotonMiTienda}
                             size={40}
                             onPress={() => {
-                                let mensaje = `Estimad@, me interesa la vancante de ${upperCase(titulo)} publicada en la aplicación DIDPEL. Me puede brindar más informes por favor.`;
+                                let mensaje = `Estimad@, me interesa la vancante de ${upperCase(titulo)} publicada en la aplicación ${nombreApp}. Me puede brindar más informes por favor.`;
                                 enviarMensajeWhastapp(phoneNumber, mensaje)
                             }}
                             iconStyle={{ position: 'relative', }}

@@ -22,6 +22,7 @@ import {
   colorMarca,
   colorBotonMiTienda,
   myBackgoroundColor,
+  nombreApp,
 } from "../../Utils/colores";
 import Loading from "../../Componentes/Loading";
 import Carousel from "../../Componentes/Carousel";
@@ -143,7 +144,7 @@ export default function Detalle(props) {
                   color={colorBotonMiTienda}
                   size={50}
                   onPress={() => {
-                    const mensajeWhastApp = `Estimad@ ${nombreVendedor}, mi nombre es ${usuarioActual.displayName}, me interesa el producto ${upperCase(producto.titulo)} que se encuentra publicado en la aplicación DIDPEL.`;
+                    const mensajeWhastApp = `Estimad@ ${nombreVendedor}, mi nombre es ${usuarioActual.displayName}, me interesa el producto ${upperCase(producto.titulo)} que se encuentra publicado en la aplicación ${nombreApp}.`;
                     enviarMensajeWhastapp(phoneVendedor, mensajeWhastApp);
                   }}
                 />

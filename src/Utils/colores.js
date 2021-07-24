@@ -18,3 +18,7 @@ export const myBackgoroundColor = '#EAECEE';
 
 //variable de publicaciones
 export const publicacionesIniciales = 6;
+
+//nombre de la app
+export const nombreApp = 'DIDPEL';
+

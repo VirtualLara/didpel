@@ -11,58 +11,65 @@ import Directorio from './DirectorioStack';
 import Vacantes from './VacantesStack';
 import ShopButton from '../Componentes/ShopButton';
 
+import CustomDrawerContent from '../Componentes/CustomDrawerContent';
+
 
 const Tab = createBottomTabNavigator();
+const TabBar = () => {
+    return (
+        <Tab.Navigator
+            initialRouteName='tienda'
+            tabBarOptions={{
+                inactiveTintColor: '#fff',
+                activeTintColor: '#fff',
+                style: {
+                    //borderTopLeftRadius: 60,
+                    //borderTopRightRadius: 60,
+                    alignItems: 'center',
+                    backgroundColor: colorMarca,
+                    paddingBottom: 5,
+                }
+            }}
+            screenOptions={({ route }) => ({
+                tabBarIcon: ({ color }) => mostrarIcono(route, color),
+            })}
+        >
+            <Tab.Screen
+                component={TiendaStack}
+                name='Tienda'
+                options={{ title: 'Tienda' }}
+            />
+            <Tab.Screen
+                component={Directorio}
+                name='Directorio'
+                options={{ title: 'Directorio' }}
+            />
+            <Tab.Screen
+                component={MiTienda}
+                name='MiTienda'
+                options={{
+                    title: '',
+                    tabBarIcon: () => <ShopButton />
+                }}
+            />
+            <Tab.Screen
+                component={Vacantes}
+                name='Vacantes'
+                options={{ title: 'Vacantes' }}
+            />
+            <Tab.Screen
+                component={PerfilStack}
+                name='Perfil'
+                options={{ title: 'Perfil' }}
+            />
+        </Tab.Navigator>
+    )
+}
 
 export default function RutasAutenticadas() {
     return (
         <NavigationContainer>
-            <Tab.Navigator
-                initialRouteName='tienda'
-                tabBarOptions={{
-                    inactiveTintColor: '#fff',
-                    activeTintColor: '#fff',
-                    style: {
-                        //borderTopLeftRadius: 60,
-                        //borderTopRightRadius: 60,
-                        alignItems: 'center',
-                        backgroundColor: colorMarca,
-                        paddingBottom: 5,
-                    }
-                }}
-                screenOptions={({ route }) => ({
-                    tabBarIcon: ({ color }) => mostrarIcono(route, color),
-                })}
-            >
-                <Tab.Screen
-                    component={TiendaStack}
-                    name='Tienda'
-                    options={{ title: 'Tienda' }}
-                />
-                <Tab.Screen
-                    component={Directorio}
-                    name='Directorio'
-                    options={{ title: 'Directorio' }}
-                />
-                <Tab.Screen
-                    component={MiTienda}
-                    name='MiTienda'
-                    options={{
-                        title: '',
-                        tabBarIcon: () => <ShopButton />
-                    }}
-                />
-                <Tab.Screen
-                    component={Vacantes}
-                    name='Vacantes'
-                    options={{ title: 'Vacantes' }}
-                />
-                <Tab.Screen
-                    component={PerfilStack}
-                    name='Perfil'
-                    options={{ title: 'Perfil' }}
-                />
-            </Tab.Navigator>
+            <TabBar />
         </NavigationContainer>
     );
 }
