@@ -8,9 +8,9 @@ import { enviarMensajeWhastapp } from '../../Utils/Utils';
 export default function Contacto(props) {
 
   const { route } = props;
-  const { displayName, phoneNumber, photoURL, email } = route.params;
+  const { displayName, phoneNumber, photoURL, email, mensaje } = route.params;
 
-  const mensaje = `Hola ${displayName}. Te escribo desde ${nombreApp}, me dejaste un mensaje acerca de una de mis publicaciones.`
+  const mensajeNoti = `Hola ${displayName}. Te escribo desde ${nombreApp}, me dejaste un mensaje acerca de una de mis publicaciones.`
 
   return (
     <View style={styles.container} >
@@ -34,6 +34,11 @@ export default function Contacto(props) {
 
       </View>
 
+      <View style={{ alignContent: 'center', flexDirection: 'row', width: '100%', paddingTop: 10, paddingBottom: 10 }} >
+        <Text style={{ fontSize: 20, fontWeight: 'bold', width: '25%' }} >Mensaje:  </Text>
+        <Text style={{ fontSize: 20, fontWeight: '500', width: '65%' }} >{mensaje}</Text>
+      </View>
+
       <View style={styles.rowIcon} >
         <Icon
           type='material-community'
@@ -41,7 +46,7 @@ export default function Contacto(props) {
           reverse
           size={30}
           color={colorBotonMiTienda}
-          onPress={() => { enviarMensajeWhastapp(phoneNumber, mensaje) }}
+          onPress={() => { enviarMensajeWhastapp(phoneNumber, mensajeNoti) }}
         />
 
         {<Icon

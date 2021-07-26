@@ -6,7 +6,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { size } from 'lodash';
 
 import { colorBotonMiTienda, colorMarca } from '../../Utils/colores';
-import { listarProductos, obtenerUsuario, listarProductosPorCategoria, listarNotificaciones } from '../../Utils/Acciones';
+import { listarProductos, obtenerUsuario, listarProductosPorCategoria, listarNotificacionesPendientes } from '../../Utils/Acciones';
 import { formatoMoneda } from '../../Utils/Utils';
 import Busqueda from '../../Componentes/Busqueda';
 import Loading from '../../Componentes/Loading';
@@ -27,7 +27,7 @@ export default function Tienda() {
         setNotificaciones(0)
         setList(await listarProductos());
 
-        const consulta = await listarNotificaciones();
+        const consulta = await listarNotificacionesPendientes();
         if (consulta.statusresponse) {
           setNotificaciones(size(consulta.data))
         }
@@ -69,8 +69,9 @@ export default function Tienda() {
         <Image source={{ uri: imagenes[0] }} style={styles.imgProducto} />
         <View style={styles.infoBox} >
           <Text style={styles.titulo} >{titulo}</Text>
-          <Text >{descripcion.substring(0, 50)}</Text>
-          <Text style={styles.vendidoPor} >Vendido por:</Text>
+          <Text style={{ width: '90%', fontSize: 16 }} > {size(descripcion) > 26 ? `${descripcion.substring(0, 27)}...` : descripcion}</Text>
+
+          {/*  <Text style={styles.vendidoPor} >Vendido por:</Text>
           <View style={styles.avatarBox} >
             <Avatar
               source={photoURL ? { uri: photoURL } : require('../../../assets/avatar.jpg')}
@@ -79,12 +80,11 @@ export default function Tienda() {
               style={styles.avatar}
             />
             <Text style={styles.displayName} > {displayName} </Text>
-          </View>
+          </View> */}
 
           <Rating
-            imageSize={15}
+            imageSize={25}
             startingValue={rating}
-            style={{ paddingLeft: 40 }}
             readonly
           />
           <Text style={styles.precio} > {formatoMoneda(parseInt(precio))} </Text>
@@ -147,14 +147,14 @@ export default function Tienda() {
                 name='bell-outline'
                 color='#fff'
                 size={30}
-                onPress={() => {navigation.navigate('Mensajes')}}
+                onPress={() => { navigation.navigate('Mensajes') }}
               />
-              { notificaciones > 0 && ( 
-              <Badge
-                status='error'
-                containerStyle={{ position: 'absolute', top: -4, right: -4 }}
-                value={notificaciones}
-              />
+              {notificaciones > 0 && (
+                <Badge
+                  status='error'
+                  containerStyle={{ position: 'absolute', top: -4, right: -4 }}
+                  value={notificaciones}
+                />
               )}
             </View>
 

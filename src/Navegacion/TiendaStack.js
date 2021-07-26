@@ -5,8 +5,9 @@ import { colorMarca } from '../Utils/colores';
 
 import Tienda from "../Pantallas/Tienda/Tienda.js";
 import Detalle from "../Pantallas/Tienda/Detalle";
-import MensajesList from "../Pantallas/Tienda/MensajesList";
 import Contacto from "../Pantallas/Tienda/Contacto";
+import MensajesList from "../Pantallas/Tienda/MensajesList";
+import TabMensajes from '../Navegacion/TabMensajes'
 
 
 export default function TiendaStack() {
@@ -14,7 +15,6 @@ export default function TiendaStack() {
   const Stack = createStackNavigator();
 
   return (
-
     <Stack.Navigator>
       <Stack.Screen
         component={Tienda}
@@ -31,7 +31,7 @@ export default function TiendaStack() {
         }}
       />
       <Stack.Screen
-        component={MensajesList}
+        component={TabMensajes}
         name="Mensajes"
         options={{
           title: "Mensajes",

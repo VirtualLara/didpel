@@ -9,10 +9,10 @@ import {
 import { Avatar } from "react-native-elements";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import moment from 'moment/min/moment-with-locales'
+import { size } from 'lodash'
 
-import { listarNotificaciones, actualizarRegistro } from "../../Utils/Acciones";
-import { colorBotonMiTienda } from "../../Utils/colores";
-import { TouchableOpacityComponent } from "react-native";
+import { listarNotificacionesPendientes, actualizarRegistro } from "../../Utils/Acciones";
+import { colorBotonMiTienda, colorMarca } from "../../Utils/colores";
 
 export default function MensajesList() {
   const [notificaciones, setNotificaciones] = useState(null);
@@ -25,11 +25,11 @@ export default function MensajesList() {
   useFocusEffect(
     useCallback(() => {
       (async () => {
-        const consulta = await listarNotificaciones();
+        const consulta = await listarNotificacionesPendientes();
         if (consulta.statusresponse) {
           setNotificaciones(consulta.data);
         } else {
-          setMensaje("No se econtraron mesajes por notificaciones...");
+          setMensaje("No se econtraron mesajes por notificaciones leídas...");
         }
       })();
     }, [])
@@ -54,6 +54,7 @@ export default function MensajesList() {
   return (
     notificaciones && (
       <View style={{ backgroundColor: "#fff", flex: 1 }}>
+        <Text style={{ fontSize: 20, color: colorMarca, fontWeight: 'bold', textAlign: 'center' }} > ~ Lista de mensajes pendientes ~ </Text>
         <FlatList
           data={notificaciones}
           renderItem={(item) => (
@@ -80,6 +81,7 @@ function Notificacion(props) {
           phoneNumber,
           photoURL,
           email,
+          mensaje,
         });
         console.log(notificacion)
         actualizarRegistro('Notificaciones', notificacion.item.id, { visto: 1 })
@@ -121,6 +123,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     alignItems: "center",
     justifyContent: "space-between",
+    backgroundColor: '#D5D8DC'
   },
   avatar: {
     width: 50,

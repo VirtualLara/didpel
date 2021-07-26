@@ -5,7 +5,7 @@ import Constants from "expo-constants";
 import * as Notifications from "expo-notifications";
 import "firebase/firestore";
 import uuid from "random-uuid-v4";
-import { map } from "lodash";
+import { map, orderBy } from "lodash";
 import { FireSQL } from "firesql";
 import moment from 'moment/min/moment-with-locales'
 
@@ -286,7 +286,18 @@ export const listarMisProductos = async () => {
   await db
     .collection("Productos")
     .where("usuario", "==", obtenerUsuario().uid)
-    //.where('status', '==', 1)
+    .where('fechavigencia', 'in', [
+      moment(new Date()).format("MMM Do YY"),
+      moment(sumarDias(new Date(), 1)).format("MMM Do YY"),
+      moment(sumarDias(new Date(), 2)).format("MMM Do YY"),
+      moment(sumarDias(new Date(), 3)).format("MMM Do YY"),
+      moment(sumarDias(new Date(), 4)).format("MMM Do YY"),
+      moment(sumarDias(new Date(), 5)).format("MMM Do YY"),
+      moment(sumarDias(new Date(), 6)).format("MMM Do YY"),
+      moment(sumarDias(new Date(), 7)).format("MMM Do YY"),
+      moment(sumarDias(new Date(), 8)).format("MMM Do YY"),
+      moment(sumarDias(new Date(), 9)).format("MMM Do YY"),
+    ])
     .get()
     .then((response) => {
       response.forEach((doc) => {
@@ -499,7 +510,7 @@ export const setMensajeNotificacion = (token, titulo, body, data) => {
   return mensaje;
 };
 
-export const listarNotificaciones = async () => {
+export const listarNotificacionesPendientes = async () => {
   let respuesta = { statusresponse: false, data: [] };
 
   let index = 0;
@@ -508,6 +519,36 @@ export const listarNotificaciones = async () => {
     .collection("Notificaciones")
     .where("receiver", "==", obtenerUsuario().uid)
     .where("visto", "==", 0)
+    .get()
+    .then((response) => {
+      let datos;
+
+      response.forEach((doc) => {
+        datos = doc.data();
+        datos.id = doc.id;
+        respuesta.data.push(datos);
+      });
+      respuesta.statusresponse = true;
+    });
+
+  for (const notificacion of respuesta.data) {
+    const usuario = await obtenerRegistroXID("Usuarios", notificacion.sender);
+    respuesta.data[index].sender = usuario.data;
+    index++;
+  }
+  return respuesta;
+};
+
+export const listarNotificacionesLeidas = async () => {
+  let respuesta = { statusresponse: false, data: [] };
+
+  let index = 0;
+
+  await db
+    .collection("Notificaciones")
+    .where("receiver", "==", obtenerUsuario().uid)
+    .where("visto", "==", 1)
+    //.orderBy("fechacreacion", 'desc')
     .get()
     .then((response) => {
       let datos;

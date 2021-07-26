@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { colorMarca } from '../Utils/colores';
 
 import Vacantes from "../Pantallas/Empleo/Vacantes";
+import DetallesVancate from '../Pantallas/Empleo/DetallesVancate';
 
 
 export default function EmpleoStack() {
@@ -17,6 +18,11 @@ export default function EmpleoStack() {
         component={Vacantes}
         name="Vacantes"
         options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        component={DetallesVancate}
+        name="DetallesVancate"
+        options={{ headerShown: true }}
       />
     </Stack.Navigator>
 

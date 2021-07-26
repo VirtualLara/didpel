@@ -27,10 +27,10 @@ import {
 import Loading from "../../Componentes/Loading";
 import Carousel from "../../Componentes/Carousel";
 import { Icon } from "react-native-elements/dist/icons/Icon";
-
 import Modal from "../../Componentes/Modal";
 
 export default function Detalle(props) {
+
   const { route } = props;
   const { id, titulo } = route.params;
 
@@ -323,7 +323,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   precio: {
-    fontSize: 18,
+    fontSize: 20,
     color: colorBotonMiTienda,
     fontWeight: "bold",
     paddingLeft: 10,

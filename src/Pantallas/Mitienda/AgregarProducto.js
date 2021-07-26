@@ -199,7 +199,7 @@ export default function AgregarProducto() {
       <Text style={styles.txtLabel} > Asignar Categoría </Text>
       <Botonera categoria={categoria} setCategoria={setCategoria} />
 
-      <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', paddingTop: 20 }} >
+      {/*    <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', paddingTop: 20 }} >
         <Text style={styles.txtLabelWarning} > Mantener publicación activa </Text>
         <CheckBox
           style={styles.checkbox}
@@ -229,7 +229,7 @@ export default function AgregarProducto() {
 
           }
         />
-      </View>
+      </View> */}
 
       <Button
         title='Agregar Nuevo Producto o Servicio'

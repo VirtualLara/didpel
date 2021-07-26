@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { View, Text, StatusBar, StyleSheet, Alert, FlatList, Linking } from "react-native";
+import { View, Text, StatusBar, StyleSheet, Alert, FlatList, Linking, TouchableOpacity } from "react-native";
 import { Icon, Avatar, } from 'react-native-elements';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -36,51 +36,30 @@ export default function Vacantes() {
     }
 
     function Vacante(props) {
-        const { vacante } = props;
-        const { titulo, descripcion, salario, colonia, ciudad, usuario, fechacreacion, fechavigencia } = vacante.item;
+        const { vacante, navigation } = props;
+        const { titulo, descripcion, salario, colonia, ciudad, usuario, id } = vacante.item;
         const { displayName, photoURL, phoneNumber } = usuario;
 
         return (
-            <View style={styles.card}            >
-                <View style={styles.infoBox} >
 
-                    <Text style={styles.titulo} >{titulo}</Text>
-                    <Text >{descripcion}</Text>
-                    <Text > <Text style={styles.titulo} >Para: </Text>{colonia}</Text>
-                    <Text > <Text style={styles.titulo} >En: </Text>{ciudad}</Text>
+            <TouchableOpacity
+                style={styles.card}
+                onPress={() => { navigation.navigate('DetallesVancate', { id, titulo, descripcion, salario, colonia, ciudad }) }}
+            >
+                <View style={styles.card}            >
+                    <View style={styles.infoBox} >
 
-                    <View style={{ flexDirection: 'row' }} >
-                        <Text style={styles.tituloSalario} ><Text style={styles.titulo} >Salario ofrecido: </Text> {formatoMoneda(parseInt(salario))} </Text>
+                        <Text style={styles.titulo} >{titulo}</Text>
+                        <Text >{descripcion}</Text>
+                        <Text > <Text style={styles.titulo} >Colonia: </Text>{colonia}</Text>
+                        <Text > <Text style={styles.titulo} >Ciudad: </Text>{ciudad}</Text>
+
+                        <View style={{ flexDirection: 'row' }} >
+                            <Text style={styles.tituloSalario} ><Text style={styles.titulo} >Salario ofrecido: </Text> {formatoMoneda(parseInt(salario))} </Text>
+                        </View>
                     </View>
-
-                    <Text style={styles.publicadaPor} >Publicada por:</Text>
-
-                    <View style={styles.avatarBox} >
-                        <Avatar
-                            source={photoURL ? { uri: photoURL } : require('../../../assets/avatar.jpg')}
-                            rounded
-                            size='large'
-                            style={styles.avatar}
-                        />
-                        <Text style={styles.displayName} > {displayName} </Text>
-                        <Text>      </Text>
-                        <Icon
-                            type='material-community'
-                            name='whatsapp'
-                            color={colorBotonMiTienda}
-                            size={40}
-                            onPress={() => {
-                                let mensaje = `Estimad@, me interesa la vancante de ${upperCase(titulo)} publicada en la aplicación ${nombreApp}. Me puede brindar más informes por favor.`;
-                                enviarMensajeWhastapp(phoneNumber, mensaje)
-                            }}
-                            iconStyle={{ position: 'relative', }}
-                        />
-                    </View>
-
-
-
                 </View>
-            </View>
+            </TouchableOpacity>
         )
     }
 
@@ -95,16 +74,17 @@ export default function Vacantes() {
                     setSearch={setSearch}
                     search={search}
                     setMensajes={setMensajes}
-                    placeholder={'Buscar por actvidad u oficio'}
-                    query={`SELECT * FROM Vacantes WHERE titulo LIKE '${search}%' OR descripcion LIKE '${search}%'`}
+                    placeholder={'Buscar actvidad - oficio - colonia - ciudad'}
+                    query={`SELECT * FROM Vacantes WHERE titulo LIKE '${search}%' OR descripcion LIKE '${search}%' OR colonia LIKE '${search}%' OR ciudad LIKE '${search}%'`}
                 />
             </View>
-
             {size(list) > 0 ? (
                 <FlatList
                     data={list}
                     renderItem={(vacante) => (
-                        <Vacante vacante={vacante} navigation={navigation} />
+                        <View style={{ paddingTop: 10 }} >
+                            <Vacante vacante={vacante} navigation={navigation} />
+                        </View>
                     )}
                     keyExtractor={(Item, index) => index.toString()}
                 />
@@ -145,20 +125,11 @@ const styles = StyleSheet.create({
     },
     card: {
         width: '100%',
-        paddingVertical: 20,
         flex: 1,
-        paddingHorizontal: 10,
-        marginHorizontal: 5,
         borderBottomColor: colorMarca,
         borderBottomWidth: 1,
-        alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'row',
-    },
-    imgProducto: {
-        width: 150,
-        height: 200,
-        borderRadius: 10,
     },
     infoBox: {
         width: '100%',
