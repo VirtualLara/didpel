@@ -23,7 +23,7 @@ export default function ConfirmarNumero(props) {
       const { uid, displayName, photoURL, email, phoneNumber, } = obtenerUsuario();
       const registro = await addRegisterEspecifico("Usuarios", uid, {
         token,
-        displayName,
+        displayName: email,
         photoURL,
         email,
         phoneNumber,

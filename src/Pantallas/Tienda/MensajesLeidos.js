@@ -55,7 +55,7 @@ export default function MensajesLeidos() {
     return (
         notificaciones && (
             <View style={{ backgroundColor: "#fff", flex: 1 }}>
-                <Text style={{ fontSize: 20, color: colorMarca, fontWeight: 'bold', textAlign: 'center' }} > ~ Lista de mensajes leidos ~ </Text>
+                <Text style={{ fontSize: 20, color: colorMarca, fontWeight: 'bold', textAlign: 'center' }} > ~ Mensajes leidos ~ </Text>
                 <FlatList
                     data={notificaciones}
                     renderItem={(item) => (

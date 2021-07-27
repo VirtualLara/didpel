@@ -54,7 +54,7 @@ export default function MensajesList() {
   return (
     notificaciones && (
       <View style={{ backgroundColor: "#fff", flex: 1 }}>
-        <Text style={{ fontSize: 20, color: colorMarca, fontWeight: 'bold', textAlign: 'center' }} > ~ Lista de mensajes pendientes ~ </Text>
+        <Text style={{ fontSize: 20, color: colorMarca, fontWeight: 'bold', textAlign: 'center' }} > ~ Mensajes pendientes ~ </Text>
         <FlatList
           data={notificaciones}
           renderItem={(item) => (
