@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { colorMarca } from '../Utils/colores';
 
-import Vacantes from "../Pantallas/Empleo/Vacantes";
+import TabVacantes from "../Navegacion/TabVacantes";
 import DetallesVancate from '../Pantallas/Empleo/DetallesVancate';
 
 
@@ -15,8 +15,8 @@ export default function EmpleoStack() {
 
     <Stack.Navigator>
       <Stack.Screen
-        component={Vacantes}
-        name="Vacantes"
+        component={TabVacantes}
+        name="TabVacantes"
         options={{ headerShown: false }}
       />
       <Stack.Screen
