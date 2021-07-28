@@ -1,12 +1,11 @@
 import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { Icon } from 'react-native-elements';
 import { colorIconTabMensajes, colorTabMensajes, colorMarca } from '../Utils/colores';
 
 
 import MensajesList from './../Pantallas/Tienda/MensajesList';
 import MensajesLeidos from './../Pantallas/Tienda/MensajesLeidos';
+
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -21,9 +20,6 @@ const TabBar = () => {
                     backgroundColor: colorMarca,
                 }
             }}
-            screenOptions={({ route }) => ({
-                tabBarIcon: ({ color }) => mostrarIcono(route, color),
-            })}
         >
             <Tab.Screen
                 component={MensajesList}
@@ -39,26 +35,8 @@ const TabBar = () => {
     )
 }
 
-export default function TabMensajes() {
+export default function TabTienda() {
     return (
         <TabBar />
     );
-}
-
-function mostrarIcono(route, color) {
-
-    let iconName = ''
-
-    switch (route.name) {
-        case 'MensajesList':
-            iconName = 'book'
-            break;
-
-        case 'MensajesLeidos':
-            iconName = 'book-open'
-            break;
-    }
-    return (
-        <Icon type='material-community' name={iconName} size={24} color={color} />
-    )
 }
