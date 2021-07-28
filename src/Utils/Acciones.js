@@ -400,6 +400,114 @@ export const listarProductos = async () => {
   return productosList;
 };
 
+export const listarProductosMiColonia = async () => {
+
+  const productosList = [];
+  let index = 0;
+
+  let user = obtenerUsuario().uid;
+  let datosUSer = await obtenerRegistroXID('Usuarios', user);
+  let colonia = datosUSer.data.colonia;
+
+  if (colonia) {
+    await db
+      .collection("Productos")
+      .where("status", "==", 1)
+      .where('fechavigencia', 'in', [
+        moment(new Date()).format("MMM Do YY"),
+        moment(sumarDias(new Date(), 1)).format("MMM Do YY"),
+        moment(sumarDias(new Date(), 2)).format("MMM Do YY"),
+        moment(sumarDias(new Date(), 3)).format("MMM Do YY"),
+        moment(sumarDias(new Date(), 4)).format("MMM Do YY"),
+        moment(sumarDias(new Date(), 5)).format("MMM Do YY"),
+        moment(sumarDias(new Date(), 6)).format("MMM Do YY"),
+        moment(sumarDias(new Date(), 7)).format("MMM Do YY"),
+        moment(sumarDias(new Date(), 8)).format("MMM Do YY"),
+        moment(sumarDias(new Date(), 9)).format("MMM Do YY"),
+      ])
+      .where('colonia', '==', `${colonia}`)
+      .get()
+      .then((response) => {
+        response.forEach((doc) => {
+          const producto = doc.data();
+          producto.id = doc.id;
+
+          productosList.push(producto);
+        });
+      })
+      .catch((err) => console.log(err));
+
+    for (const registro of productosList) {
+      const usuario = await obtenerRegistroXID("Usuarios", registro.usuario);
+      productosList[index].usuario = usuario.data;
+      index++;
+    }
+
+    return productosList;
+
+  } else {
+
+    return productosList;
+
+  }
+
+
+};
+
+export const listarProductosMiCiudad = async () => {
+
+  const productosList = [];
+  let index = 0;
+
+  let user = obtenerUsuario().uid;
+  let datosUSer = await obtenerRegistroXID('Usuarios', user);
+  let ciudad = datosUSer.data.ciudad;
+
+  if (ciudad) {
+    await db
+      .collection("Productos")
+      .where("status", "==", 1)
+      .where('fechavigencia', 'in', [
+        moment(new Date()).format("MMM Do YY"),
+        moment(sumarDias(new Date(), 1)).format("MMM Do YY"),
+        moment(sumarDias(new Date(), 2)).format("MMM Do YY"),
+        moment(sumarDias(new Date(), 3)).format("MMM Do YY"),
+        moment(sumarDias(new Date(), 4)).format("MMM Do YY"),
+        moment(sumarDias(new Date(), 5)).format("MMM Do YY"),
+        moment(sumarDias(new Date(), 6)).format("MMM Do YY"),
+        moment(sumarDias(new Date(), 7)).format("MMM Do YY"),
+        moment(sumarDias(new Date(), 8)).format("MMM Do YY"),
+        moment(sumarDias(new Date(), 9)).format("MMM Do YY"),
+      ])
+      .where('ciudad', '==', `${ciudad}`)
+      .get()
+      .then((response) => {
+        response.forEach((doc) => {
+          const producto = doc.data();
+          producto.id = doc.id;
+
+          productosList.push(producto);
+        });
+      })
+      .catch((err) => console.log(err));
+
+    for (const registro of productosList) {
+      const usuario = await obtenerRegistroXID("Usuarios", registro.usuario);
+      productosList[index].usuario = usuario.data;
+      index++;
+    }
+
+    return productosList;
+
+  } else {
+
+    return productosList;
+
+  }
+
+
+};
+
 export const listarProductosPorCategoria = async (categoria) => {
   const productosList = [];
   let index = 0;
@@ -427,6 +535,88 @@ export const listarProductosPorCategoria = async (categoria) => {
   }
 
   return productosList;
+};
+
+export const listarProductosPorCategoriaColonia = async (categoria) => {
+  const productosList = [];
+  let index = 0;
+
+  let user = obtenerUsuario().uid;
+  let datosUSer = await obtenerRegistroXID('Usuarios', user);
+  let colonia = datosUSer.data.colonia;
+
+if (colonia) {
+  await db
+    .collection("Productos")
+    .where("status", "==", 1)
+    .where("categoria", "==", categoria)
+    .where('colonia', '==', `${colonia}`)
+    .get()
+    .then((response) => {
+      response.forEach((doc) => {
+        const producto = doc.data();
+        producto.id = doc.id;
+
+        productosList.push(producto);
+      });
+    })
+    .catch((err) => console.log(err));
+
+  for (const registro of productosList) {
+    const usuario = await obtenerRegistroXID("Usuarios", registro.usuario);
+    productosList[index].usuario = usuario.data;
+    index++;
+  }
+
+  return productosList;
+
+} else {
+
+  return productosList;
+
+}
+  
+};
+
+export const listarProductosPorCategoriaCiudad = async (categoria) => {
+  const productosList = [];
+  let index = 0;
+
+  let user = obtenerUsuario().uid;
+  let datosUSer = await obtenerRegistroXID('Usuarios', user);
+  let ciudad = datosUSer.data.ciudad;
+
+if (ciudad) {
+  await db
+    .collection("Productos")
+    .where("status", "==", 1)
+    .where("categoria", "==", categoria)
+    .where('ciudad', '==', `${ciudad}`)
+    .get()
+    .then((response) => {
+      response.forEach((doc) => {
+        const producto = doc.data();
+        producto.id = doc.id;
+
+        productosList.push(producto);
+      });
+    })
+    .catch((err) => console.log(err));
+
+  for (const registro of productosList) {
+    const usuario = await obtenerRegistroXID("Usuarios", registro.usuario);
+    productosList[index].usuario = usuario.data;
+    index++;
+  }
+
+  return productosList;
+
+} else {
+
+  return productosList;
+
+}
+  
 };
 
 export const Buscar = async (query) => {

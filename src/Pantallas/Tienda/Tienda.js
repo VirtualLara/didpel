@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { View, Text, StatusBar, StyleSheet, Alert, FlatList, Dimensions, TouchableOpacity } from "react-native";
+import { View, Text, StatusBar, StyleSheet, Alert, FlatList, ActivityIndicator, TouchableOpacity } from "react-native";
 import { Icon, Avatar, Image, Rating, Badge } from 'react-native-elements';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -10,6 +10,7 @@ import { listarProductos, obtenerUsuario, listarProductosPorCategoria, listarNot
 import { formatoMoneda } from '../../Utils/Utils';
 import Busqueda from '../../Componentes/Busqueda';
 import Loading from '../../Componentes/Loading';
+import { not } from "react-native-reanimated";
 
 export default function Tienda() {
 
@@ -118,7 +119,7 @@ export default function Tienda() {
   }
 
 
-
+if (size(list)>0) {
   return (
     <View style={styles.frame} >
       <StatusBar backgroundColor={colorMarca} />
@@ -243,6 +244,19 @@ export default function Tienda() {
 
     </View >
   );
+} else {
+  return(
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
+      <ActivityIndicator
+      size={50}
+      color={colorBotonMiTienda}
+      />
+
+      <Text style={{ fontSize: 20, color: colorBotonMiTienda, fontWeight: 'bold' }} >Obteniendo información...</Text>
+    </View>
+  )
+}
+  
 }
 
 

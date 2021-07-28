@@ -3,11 +3,10 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { colorMarca } from '../Utils/colores';
 
-import Tienda from "../Pantallas/Tienda/Tienda.js";
 import Detalle from "../Pantallas/Tienda/Detalle";
 import Contacto from "../Pantallas/Tienda/Contacto";
-import MensajesList from "../Pantallas/Tienda/MensajesList";
 import TabMensajes from '../Navegacion/TabMensajes'
+import TabTienda from '../Navegacion/TabTienda'
 
 
 export default function TiendaStack() {
@@ -17,7 +16,7 @@ export default function TiendaStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        component={Tienda}
+        component={TabTienda}
         name="Tienda"
         options={{ headerShown: false }}
       />

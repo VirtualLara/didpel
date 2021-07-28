@@ -3,8 +3,9 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import { colorIconTabMensajes, colorTabMensajes, colorMarca } from '../Utils/colores';
 
 
-import MensajesList from './../Pantallas/Tienda/MensajesList';
-import MensajesLeidos from './../Pantallas/Tienda/MensajesLeidos';
+import TiendaMiColonia from './../Pantallas/Tienda/TiendaMiColonia';
+import TiendaMiCiudad from './../Pantallas/Tienda/TiendaMiCiudad';
+import Tienda from './../Pantallas/Tienda/Tienda';
 
 
 const Tab = createMaterialTopTabNavigator();
@@ -12,7 +13,7 @@ const Tab = createMaterialTopTabNavigator();
 const TabBar = () => {
     return (
         <Tab.Navigator
-            initialRouteName='MensajesList'
+            initialRouteName='TiendaMiColonia'
             tabBarOptions={{
                 inactiveTintColor: '#fff',
                 activeTintColor: colorIconTabMensajes,
@@ -22,14 +23,19 @@ const TabBar = () => {
             }}
         >
             <Tab.Screen
-                component={MensajesList}
-                name='MensajesList'
-                options={{ title: 'Pendientes' }}
+                component={TiendaMiColonia}
+                name='TiendaMiColonia'
+                options={{ title: 'Mi colonia' }}
             />
             <Tab.Screen
-                component={MensajesLeidos}
-                name='MensajesLeidos'
-                options={{ title: 'Leidos', }}
+                component={TiendaMiCiudad}
+                name='TiendaMiCiudad'
+                options={{ title: 'Mi ciudad', }}
+            />
+            <Tab.Screen
+                component={Tienda}
+                name='Tienda'
+                options={{ title: 'Todos', }}
             />
         </Tab.Navigator>
     )

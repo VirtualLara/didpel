@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { View, Text, StatusBar, StyleSheet, Alert, FlatList, Linking, TouchableOpacity } from "react-native";
+import { View, Text, StatusBar, StyleSheet, FlatList, TouchableOpacity, ActivityIndicator } from "react-native";
 import { Icon, Avatar, } from 'react-native-elements';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -18,6 +18,7 @@ export default function Vacantes() {
     const [search, setSearch] = useState('');
     const [mensajes, setMensajes] = useState('No hay vacantes  disponibles en este momento...');
     const [loading, setLoading] = useState(false);
+    const [cargando, setCargando] = useState(false);
 
     useFocusEffect(
         useCallback(() => {
@@ -26,6 +27,7 @@ export default function Vacantes() {
                 setList(await listarVacantes());
             })()
             setLoading(false);
+            setCargando(true);
         }, [])
     );
 
@@ -41,7 +43,6 @@ export default function Vacantes() {
         const { displayName, photoURL, phoneNumber } = usuario;
 
         return (
-
             <TouchableOpacity
                 style={styles.card}
                 onPress={() => { navigation.navigate('DetallesVancate', { id, titulo, descripcion, salario, colonia, ciudad }) }}
@@ -63,42 +64,59 @@ export default function Vacantes() {
         )
     }
 
-    return (
-        <View style={styles.frame} >
-            <StatusBar backgroundColor={colorMarca} />
-
-            <View style={styles.header} >
-                <Busqueda
-                    setList={setList}
-                    actualizar={actualizarVacantes}
-                    setSearch={setSearch}
-                    search={search}
-                    setMensajes={setMensajes}
-                    placeholder={'Buscar actvidad - oficio - colonia - ciudad'}
-                    query={`SELECT * FROM Vacantes WHERE titulo LIKE '${search}%' OR descripcion LIKE '${search}%' OR colonia LIKE '${search}%' OR ciudad LIKE '${search}%'`}
-                />
-            </View>
-            {size(list) > 0 ? (
-                <FlatList
-                    data={list}
-                    renderItem={(vacante) => (
-                        <View style={{ paddingTop: 10 }} >
-                            <Vacante vacante={vacante} navigation={navigation} />
+    if (cargando) {
+        if (list) {
+            return (
+                <View style={styles.frame} >
+                    <StatusBar backgroundColor={colorMarca} />
+        
+                    <View style={styles.header} >
+                        <Busqueda
+                            setList={setList}
+                            actualizar={actualizarVacantes}
+                            setSearch={setSearch}
+                            search={search}
+                            setMensajes={setMensajes}
+                            placeholder={'Buscar actvidad - oficio - colonia - ciudad'}
+                            query={`SELECT * FROM Vacantes WHERE titulo LIKE '${search}%' OR descripcion LIKE '${search}%' OR colonia LIKE '${search}%' OR ciudad LIKE '${search}%'`}
+                        />
+                    </View>
+                    {size(list) > 0 ? (
+                        <FlatList
+                            data={list}
+                            renderItem={(vacante) => (
+                                <View style={{ paddingTop: 10 }} >
+                                    <Vacante vacante={vacante} navigation={navigation} />
+                                </View>
+                            )}
+                            keyExtractor={(Item, index) => index.toString()}
+                        />
+                    ) : (
+                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
+                            <Text style={{ fontSize: 30, fontWeight: 'bold', color: colorBotonMiTienda, textAlign: 'center' }} > {mensajes} </Text>
                         </View>
-                    )}
-                    keyExtractor={(Item, index) => index.toString()}
-                />
-            ) : (
-                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
-                    <Text style={{ fontSize: 30, fontWeight: 'bold', color: colorBotonMiTienda, textAlign: 'center' }} > {mensajes} </Text>
+                    )
+                    }
+        
+                    <Loading isVisible={loading} text='Cargando...' />
+        
                 </View>
             )
-            }
+        } else {
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
+              <Text style={{ fontSize: 20, color: colorBotonMiTienda, fontWeight: 'bold' }} >Obteniendo información...</Text>
+            </View>
+        }
+    } else {
+        return (
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
+              <ActivityIndicator size={50} color={colorBotonMiTienda} />
+              <Text style={{ fontSize: 20, color: colorBotonMiTienda, fontWeight: 'bold' }} >Obteniendo información...</Text>
+            </View>
+          ) 
+    }
 
-            <Loading isVisible={loading} text='Cargando...' />
 
-        </View>
-    )
 }
 
 const styles = StyleSheet.create({

@@ -1,3 +1,6 @@
+//git reset --hard -----resetear cuando no quiere bajar los cambios git pull
+
+
 import * as ImagePicker from 'expo-image-picker';
 import { size } from 'lodash';
 import { Alert, Linking } from 'react-native';

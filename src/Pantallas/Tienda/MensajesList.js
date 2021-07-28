@@ -5,6 +5,7 @@ import {
   StyleSheet,
   FlatList,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 import { Avatar } from "react-native-elements";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
@@ -16,8 +17,9 @@ import { colorBotonMiTienda, colorMarca } from "../../Utils/colores";
 
 export default function MensajesList() {
   const [notificaciones, setNotificaciones] = useState(null);
-  const [mensaje, setMensaje] = useState("");
+  const [mensaje, setMensaje] = useState("No tiene notificaciones pendientes de leer...");
   const [usuario, setUsuario] = useState("");
+  const [cargando, setCargando] = useState(false);
 
   const navigation = useNavigation();
   moment.locale('es');
@@ -29,42 +31,52 @@ export default function MensajesList() {
         if (consulta.statusresponse) {
           setNotificaciones(consulta.data);
         } else {
-          setMensaje("No se econtraron mesajes por notificaciones leídas...");
+          setMensaje("No tiene notificaciones pendientes de leer...");
         }
+        setCargando(true);
       })();
     }, [])
   )
 
-  if (!notificaciones) {
+  if (cargando) {
+    if (size(notificaciones) > 0) {
+      return (
+        <View style={{ backgroundColor: "#fff", flex: 1 }}>
+          <Text style={{ fontSize: 20, color: colorMarca, fontWeight: 'bold', textAlign: 'center' }} > ~ Mensajes pendientes ~ </Text>
+          <FlatList
+            data={notificaciones}
+            renderItem={(item) => (
+              <Notificacion notificacion={item} navigation={navigation} />
+            )}
+            keyExtractor={(item, index) => index.toString()}
+          />
+        </View>
+      )
+    } else {
+      return (
+        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+          <Text
+            style={{
+              fontSize: 20,
+              fontWeight: "bold",
+              color: colorBotonMiTienda,
+              textAlign: 'center',
+            }}
+          >
+            {mensaje}
+          </Text>
+        </View>
+      );
+    } 
+  } else {
     return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text
-          style={{
-            fontSize: 18,
-            fontWeight: "bold",
-            color: colorBotonMiTienda,
-          }}
-        >
-          {mensaje}
-        </Text>
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
+        <ActivityIndicator size={50} color={colorBotonMiTienda} />
+        <Text style={{ fontSize: 20, color: colorBotonMiTienda, fontWeight: 'bold' }} >Obteniendo información...</Text>
       </View>
-    );
+    ) 
   }
 
-  return (
-    notificaciones && (
-      <View style={{ backgroundColor: "#fff", flex: 1 }}>
-        <Text style={{ fontSize: 20, color: colorMarca, fontWeight: 'bold', textAlign: 'center' }} > ~ Mensajes pendientes ~ </Text>
-        <FlatList
-          data={notificaciones}
-          renderItem={(item) => (
-            <Notificacion notificacion={item} navigation={navigation} />
-          )}
-          keyExtractor={(item, index) => index.toString()}
-        />
-      </View>
-    )
-  );
 }
 
 function Notificacion(props) {

@@ -69,7 +69,7 @@ export default function LoginForm(props) {
         secureTextEntry={!show}
       />
 
-      <Button title='ETRAR'
+      <Button title='ENTRAR'
         containerStyle={styles.btnEntrar}
         buttonStyle={{ backgroundColor: colorBotonMiTienda }}
         onPress={() => iniciarSesion()}
