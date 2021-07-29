@@ -44,15 +44,15 @@ export default function Vacantes() {
 
         return (
             <TouchableOpacity
-                style={styles.card}
+                style={{ justifyContent: 'center', alignItems: 'center' }}
                 onPress={() => { navigation.navigate('DetallesVancate', { id, titulo, descripcion, salario, colonia, ciudad }) }}
             >
                 <View style={styles.card}>
                     <View style={styles.infoBox} >
 
-                        <Text style={styles.titulo} >{titulo}</Text>
-                        <Text >{descripcion.substring(0, 100)}...</Text>
-                        <Text > <Text style={styles.titulo}>Ciudad: </Text>{ciudad}</Text>
+                        <Text style={styles.titulo} >{titulo.substring(0, 30)}...</Text>
+                        <Text style={{ fontSize: 18, color: colorBotonMiTienda, fontWeight: 'bold' }} >{descripcion.substring(0, 35)}...</Text>
+                        <Text style={{ fontSize: 18 }} ><Text style={styles.titulo}>Ciudad: </Text>{ciudad}</Text>
                         <View style={{ flexDirection: 'row' }} >
                             <Text style={styles.tituloSalario} ><Text style={styles.titulo} >Salario ofrecido: </Text> {formatoMoneda(parseInt(salario))} </Text>
                         </View>
@@ -67,7 +67,7 @@ export default function Vacantes() {
             return (
                 <View style={styles.frame} >
                     <StatusBar backgroundColor={colorMarca} />
-        
+
                     <View style={styles.header} >
                         <Busqueda
                             setList={setList}
@@ -95,23 +95,23 @@ export default function Vacantes() {
                         </View>
                     )
                     }
-        
+
                     <Loading isVisible={loading} text='Cargando...' />
-        
+
                 </View>
             )
         } else {
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
-              <Text style={{ fontSize: 20, color: colorBotonMiTienda, fontWeight: 'bold' }} >Obteniendo información...</Text>
+                <Text style={{ fontSize: 20, color: colorBotonMiTienda, fontWeight: 'bold' }} >Obteniendo información...</Text>
             </View>
         }
     } else {
         return (
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
-              <ActivityIndicator size={50} color={colorBotonMiTienda} />
-              <Text style={{ fontSize: 20, color: colorBotonMiTienda, fontWeight: 'bold' }} >Obteniendo información...</Text>
+                <ActivityIndicator size={50} color={colorBotonMiTienda} />
+                <Text style={{ fontSize: 20, color: colorBotonMiTienda, fontWeight: 'bold' }} >Obteniendo información...</Text>
             </View>
-          ) 
+        )
     }
 
 
@@ -140,12 +140,15 @@ const styles = StyleSheet.create({
         height: 50,
     },
     card: {
-        width: '100%',
+        width: '95%',
         flex: 1,
-        borderBottomColor: colorMarca,
-        borderBottomWidth: 1,
+        borderColor: colorMarca,
+        borderWidth: 1,
         justifyContent: 'center',
         flexDirection: 'row',
+        paddingBottom: 10,
+        borderRadius: 20,
+        backgroundColor: '#F5FDFF'
     },
     infoBox: {
         width: '100%',
@@ -154,16 +157,16 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     titulo: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        textAlign: 'center',
-        color: colorBotonMiTienda,
-    },
-    tituloSalario: {
-        fontSize: 18,
+        fontSize: 20,
         fontWeight: 'bold',
         textAlign: 'center',
         color: colorMarca,
+    },
+    tituloSalario: {
+        fontSize: 22,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        color: colorBotonMiTienda,
     },
     publicadaPor: {
         fontSize: 18,

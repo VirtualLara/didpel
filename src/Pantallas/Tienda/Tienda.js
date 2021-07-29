@@ -6,21 +6,23 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { size } from 'lodash';
 
 import { colorBotonMiTienda, colorMarca } from '../../Utils/colores';
-import { listarProductos, obtenerUsuario, listarProductosPorCategoria, listarNotificacionesPendientes } from '../../Utils/Acciones';
+import { listarProductos, listarProductosPorCategoria, listarNotificacionesPendientes } from '../../Utils/Acciones';
 import { formatoMoneda } from '../../Utils/Utils';
 import Busqueda from '../../Componentes/Busqueda';
 import Loading from '../../Componentes/Loading';
-import { not } from "react-native-reanimated";
 
-export default function Tienda() {
+export default function TiendaMiCiudad() {
 
   const navigation = useNavigation();
   const [list, setList] = useState([]);
   const [search, setSearch] = useState('');
-  const [mensajes, setMensajes] = useState('Cargando...');
+  const [mensajes, setMensajes] = useState('No hay publicaciones en tu ciudad ' +
+    '' +
+    'O AUN NO REGISTRAS TU CIUDAD...');
   const [notificaciones, setNotificaciones] = useState(0);
   const [categoria, setCategoria] = useState('');
   const [loading, setLoading] = useState(false);
+  const [cargando, setCargando] = useState(false);
 
   useFocusEffect(
     useCallback(() => {
@@ -32,6 +34,7 @@ export default function Tienda() {
         if (consulta.statusresponse) {
           setNotificaciones(size(consulta.data))
         }
+        setCargando(true)
       })()
     }, [])
   );
@@ -59,7 +62,7 @@ export default function Tienda() {
 
   function Producto(props) {
     const { producto, navigation } = props;
-    const { titulo, descripcion, precio, imagenes, rating, id, usuario, ciudad } = producto.item;
+    const { titulo, descripcion, precio, imagenes, rating, id, usuario, ciudad, } = producto.item;
     const { displayName, photoURL } = usuario;
 
     return (
@@ -71,17 +74,6 @@ export default function Tienda() {
         <View style={styles.infoBox} >
           <Text style={styles.titulo} >{titulo}</Text>
           <Text style={{ width: '90%', fontSize: 16 }} > {size(descripcion) > 26 ? `${descripcion.substring(0, 27)}...` : descripcion}</Text>
-
-          {/*  <Text style={styles.vendidoPor} >Vendido por:</Text>
-          <View style={styles.avatarBox} >
-            <Avatar
-              source={photoURL ? { uri: photoURL } : require('../../../assets/avatar.jpg')}
-              rounded
-              size='large'
-              style={styles.avatar}
-            />
-            <Text style={styles.displayName} > {displayName} </Text>
-          </View> */}
 
           <Rating
             imageSize={25}
@@ -120,144 +112,146 @@ export default function Tienda() {
   }
 
 
-if (size(list)>0) {
-  return (
-    <View style={styles.frame} >
-      <StatusBar backgroundColor={colorMarca} />
-      <Loading isVisible={loading} text='Cargando...' />
+  if (cargando) {
+    return (
+      <View style={styles.frame} >
+        <StatusBar backgroundColor={colorMarca} />
+        <Loading isVisible={loading} text='Cargando...' />
 
-      <View style={styles.header} >
-        <KeyboardAwareScrollView>
+        <View style={styles.header} >
+          <KeyboardAwareScrollView>
 
-          <View style={styles.menu} >
+            <View style={styles.menu} >
 
-            <View style={{ width: '85%' }}  >
-              <Busqueda
-                setList={setList}
-                actualizar={actualizarProductos}
-                setSearch={setSearch}
-                search={search}
-                setMensajes={setMensajes}
-                placeholder={'Buscalo - Encuentralo - Adquierelo'}
-                query={`SELECT * FROM Productos WHERE titulo LIKE '${search}%' OR descripcion LIKE '${search}%' OR ciudad LIKE '${search}%'`}
-              />
-            </View>
-
-            <View style={{ width: '10%' }} >
-              <Icon
-                type='material-community'
-                name='bell-outline'
-                color='#fff'
-                size={30}
-                onPress={() => { navigation.navigate('Mensajes') }}
-              />
-              {notificaciones > 0 && (
-                <Badge
-                  status='error'
-                  containerStyle={{ position: 'absolute', top: -4, right: -4 }}
-                  value={notificaciones}
+              <View style={{ width: '85%' }}  >
+                <Busqueda
+                  setList={setList}
+                  actualizar={actualizarProductos}
+                  setSearch={setSearch}
+                  search={search}
+                  setMensajes={setMensajes}
+                  placeholder={'Buscalo - Encuentralo - Adquierelo'}
+                  query={`SELECT * FROM Productos WHERE titulo LIKE '${search}%' OR descripcion LIKE '${search}%' OR colonia LIKE '${search}%' OR ciudad LIKE '${search}%'`}
                 />
-              )}
+              </View>
+
+              <View style={{ width: '10%' }} >
+                <Icon
+                  type='material-community'
+                  name='bell-outline'
+                  color='#fff'
+                  size={30}
+                  onPress={() => { navigation.navigate('Mensajes') }}
+                />
+                {notificaciones > 0 && (
+                  <Badge
+                    status='error'
+                    containerStyle={{ position: 'absolute', top: -4, right: -4 }}
+                    value={notificaciones}
+                  />
+                )}
+              </View>
+
             </View>
 
+          </KeyboardAwareScrollView>
+
+        </View>
+
+        <View style={styles.categoriaView} >
+          <View style={styles.tituloCategoria} >
+            <Text style={styles.tituloTxt} > - CATEGORIAS - </Text>
+            {categoria.length > 0 && (
+              <TouchableOpacity
+                onPress={() => {
+                  setCategoria('');
+                  actualizarProductos();
+                }
+                }
+                style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}
+              >
+                <Icon
+                  type='material-community'
+                  color='red'
+                  name='close'
+                  reverse
+                  size={10}
+                />
+                <Text style={{ color: '#fff', fontWeight: 'bold', backgroundColor: 'red' }} > Limpiar Filtro </Text>
+              </TouchableOpacity>
+            )}
           </View>
 
-        </KeyboardAwareScrollView>
-
-      </View>
-
-      <View style={styles.categoriaView} >
-        <View style={styles.tituloCategoria} >
-          <Text style={styles.tituloTxt} > - CATEGORIAS - </Text>
-          {categoria.length > 0 && (
-            <TouchableOpacity
-              onPress={() => {
-                setCategoria('');
-                actualizarProductos();
-              }
-              }
-              style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}
-            >
-              <Icon
-                type='material-community'
-                color='red'
-                name='close'
-                reverse
-                size={10}
-              />
-              <Text style={{ color: '#fff', fontWeight: 'bold', backgroundColor: 'red' }} > Limpiar Filtro </Text>
-            </TouchableOpacity>
-          )}
+          <View style={styles.categoriasList} >
+            <BotonCategoria
+              categoriaBoton='articulos'
+              categoria={categoria}
+              icon='cart-arrow-down'
+              texto='Artículos'
+              setCategoria={setCategoria}
+              cargarFiltroPorCategoria={cargarFiltroPorCategoria}
+            />
+            <BotonCategoria
+              categoriaBoton='servicios'
+              categoria={categoria}
+              icon='lightbulb-on-outline'
+              texto='Servicios'
+              setCategoria={setCategoria}
+              cargarFiltroPorCategoria={cargarFiltroPorCategoria}
+            />
+            <BotonCategoria
+              categoriaBoton='profesionales'
+              categoria={categoria}
+              icon='account-cash'
+              texto='Serv. Prof...'
+              setCategoria={setCategoria}
+              cargarFiltroPorCategoria={cargarFiltroPorCategoria}
+            />
+            <BotonCategoria
+              categoriaBoton='otros'
+              categoria={categoria}
+              icon='silverware-fork-knife'
+              texto='Otros'
+              setCategoria={setCategoria}
+              cargarFiltroPorCategoria={cargarFiltroPorCategoria}
+            />
+          </View>
         </View>
 
-        <View style={styles.categoriasList} >
-          <BotonCategoria
-            categoriaBoton='articulos'
-            categoria={categoria}
-            icon='cart-arrow-down'
-            texto='Artículos'
-            setCategoria={setCategoria}
-            cargarFiltroPorCategoria={cargarFiltroPorCategoria}
-          />
-          <BotonCategoria
-            categoriaBoton='servicios'
-            categoria={categoria}
-            icon='lightbulb-on-outline'
-            texto='Servicios'
-            setCategoria={setCategoria}
-            cargarFiltroPorCategoria={cargarFiltroPorCategoria}
-          />
-          <BotonCategoria
-            categoriaBoton='profesionales'
-            categoria={categoria}
-            icon='account-cash'
-            texto='Serv. Prof...'
-            setCategoria={setCategoria}
-            cargarFiltroPorCategoria={cargarFiltroPorCategoria}
-          />
-          <BotonCategoria
-            categoriaBoton='otros'
-            categoria={categoria}
-            icon='silverware-fork-knife'
-            texto='Otros'
-            setCategoria={setCategoria}
-            cargarFiltroPorCategoria={cargarFiltroPorCategoria}
-          />
-        </View>
+
+
+        {
+          size(list) > 0 ? (
+            <FlatList
+              data={list}
+              renderItem={(producto) => (
+                <Producto producto={producto} navigation={navigation} />
+              )}
+              keyExtractor={(Item, index) => index.toString()}
+            />
+          ) : (
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
+              <Text style={{ color: colorBotonMiTienda, fontWeight: 'bold', fontSize: 20, textAlign: 'center' }} > {mensajes} </Text>
+            </View>
+          )
+        }
+
+
+      </View >
+    );
+  } else {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
+        <ActivityIndicator
+          size={50}
+          color={colorBotonMiTienda}
+        />
+
+        <Text style={{ fontSize: 20, color: colorBotonMiTienda, fontWeight: 'bold' }} >Obteniendo información...</Text>
       </View>
+    )
+  }
 
-
-
-      {
-        size(list) > 0 ? (
-          <FlatList
-            data={list}
-            renderItem={(producto) => (
-              <Producto producto={producto} navigation={navigation} />
-            )}
-            keyExtractor={(Item, index) => index.toString()}
-          />
-        ) : (
-          <Text> {mensajes} </Text>
-        )
-      }
-
-
-    </View >
-  );
-} else {
-  return(
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
-      <ActivityIndicator
-      size={50}
-      color={colorBotonMiTienda}
-      />
-
-      <Text style={{ fontSize: 20, color: colorBotonMiTienda, fontWeight: 'bold' }} >Obteniendo información...</Text>
-    </View>
-  )
-}
-  
 }
 
 

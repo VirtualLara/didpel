@@ -43,16 +43,16 @@ export default function VacantesMiCiudad() {
         return (
 
             <TouchableOpacity
-                style={styles.card}
+                style={{ justifyContent: 'center', alignItems: 'center' }}
                 onPress={() => { navigation.navigate('DetallesVancate', { id, titulo, descripcion, salario, colonia, ciudad }) }}
             >
                 <View style={styles.card}            >
                     <View style={styles.infoBox} >
 
-                        <Text style={styles.titulo} >{titulo}</Text>
-                        <Text >{descripcion}</Text>
-                        <Text > <Text style={styles.titulo} >Colonia: </Text>{colonia}</Text>
-                        <Text > <Text style={styles.titulo} >Ciudad: </Text>{ciudad}</Text>
+                        <Text style={styles.titulo} >{titulo.substring(0, 30)}...</Text>
+                        <Text style={{ fontSize: 18, color: colorBotonMiTienda, fontWeight: 'bold' }} >{descripcion.substring(0, 35)}...</Text>
+                        <Text style={{ fontSize: 18 }} ><Text style={styles.titulo} >Colonia: </Text>{colonia}</Text>
+                        <Text style={{ fontSize: 18 }} ><Text style={styles.titulo} >Ciudad: </Text>{ciudad}</Text>
 
                         <View style={{ flexDirection: 'row' }} >
                             <Text style={styles.tituloSalario} ><Text style={styles.titulo} >Salario ofrecido: </Text> {formatoMoneda(parseInt(salario))} </Text>
@@ -135,12 +135,15 @@ const styles = StyleSheet.create({
         height: 50,
     },
     card: {
-        width: '100%',
+        width: '95%',
         flex: 1,
-        borderBottomColor: colorMarca,
-        borderBottomWidth: 1,
+        borderColor: colorMarca,
+        borderWidth: 1,
         justifyContent: 'center',
         flexDirection: 'row',
+        paddingBottom: 10,
+        borderRadius: 20,
+        backgroundColor: '#F5FDFF'
     },
     infoBox: {
         width: '100%',
@@ -149,13 +152,13 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     titulo: {
-        fontSize: 18,
+        fontSize: 20,
         fontWeight: 'bold',
         textAlign: 'center',
         color: colorMarca,
     },
     tituloSalario: {
-        fontSize: 18,
+        fontSize: 22,
         fontWeight: 'bold',
         textAlign: 'center',
         color: colorBotonMiTienda,

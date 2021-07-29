@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { View, Text, StyleSheet, } from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { Icon, Avatar, } from 'react-native-elements';
 import { size, upperCase } from 'lodash';
 
@@ -41,16 +41,19 @@ export default function DetallesVancate(props) {
     }, [vacante]);
 
     return (
-        <View style={styles.frame} >
+        <ScrollView style={styles.frame} >
             <View style={styles.infoBox} >
                 <Text style={styles.titulo} >{titulo}</Text>
-                <Text >{descripcion}</Text>
-                <Text > <Text style={styles.titulo} >Colonia: </Text>{colonia}</Text>
-                <Text > <Text style={styles.titulo} >Ciudad: </Text>{ciudad}</Text>
+                <Text>{'\n'}</Text>
+                <Text style={{ fontSize: 16, textAlign: 'justify' }} >{descripcion}</Text>
+                <Text>{'\n'}</Text>
+                <Text ><Text style={styles.titulo} >Colonia: </Text>{colonia}</Text>
+                <Text ><Text style={styles.titulo} >Ciudad: </Text>{ciudad}</Text>
                 <View style={{ flexDirection: 'row' }} >
                     <Text style={styles.tituloSalario} ><Text style={styles.titulo} >Salario ofrecido: </Text> {formatoMoneda(parseInt(salario))} </Text>
                 </View>
 
+                <Text>{'\n'}</Text>
                 <Text style={styles.publicadaPor} >Publicada por:</Text>
                 <View style={styles.avatarBox} >
                     <Avatar
@@ -74,7 +77,7 @@ export default function DetallesVancate(props) {
                     />
                 </View>
             </View>
-        </View>
+        </ScrollView>
 
 
     )
@@ -93,19 +96,19 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     titulo: {
-        fontSize: 18,
+        fontSize: 20,
         fontWeight: 'bold',
         textAlign: 'center',
         color: colorMarca,
     },
     tituloSalario: {
-        fontSize: 18,
+        fontSize: 25,
         fontWeight: 'bold',
         textAlign: 'center',
         color: colorBotonMiTienda,
     },
     publicadaPor: {
-        fontSize: 18,
+        fontSize: 20,
         marginTop: 5,
         color: colorBotonMiTienda,
         fontWeight: 'bold'
@@ -117,16 +120,10 @@ const styles = StyleSheet.create({
         marginTop: 5,
     },
     avatar: {
-        width: 30,
-        height: 30,
+        width: 50,
+        height: 50,
     },
     displayName: {
         fontSize: 18
-    },
-    precio: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: colorMarca,
-        alignSelf: 'center'
     },
 })
