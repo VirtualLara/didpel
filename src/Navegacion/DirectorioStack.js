@@ -3,7 +3,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { colorMarca } from '../Utils/colores';
 
-import Directorio from "../Pantallas/Directorio/Directorio";
+import TabDirectorio from "../Navegacion/TabDirectorio";
+import PublicacionesPorAnunciante from "../Pantallas/Directorio/PublicacionesPorAnunciante";
 
 
 export default function DirectorioStack() {
@@ -14,9 +15,14 @@ export default function DirectorioStack() {
 
     <Stack.Navigator>
       <Stack.Screen
-        component={Directorio}
-        name="Directorio"
+        component={TabDirectorio}
+        name="TabDirectorio"
         options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        component={PublicacionesPorAnunciante}
+        name="PublicacionesPorAnunciante"
+        options={{ title: 'Publicaciones del anunciante' }}
       />
     </Stack.Navigator>
 

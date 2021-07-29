@@ -408,6 +408,7 @@ export const listarProductosMiColonia = async () => {
   let user = obtenerUsuario().uid;
   let datosUSer = await obtenerRegistroXID('Usuarios', user);
   let colonia = datosUSer.data.colonia;
+  let ciudad = datosUSer.data.ciudad;
 
   if (colonia) {
     await db
@@ -426,6 +427,7 @@ export const listarProductosMiColonia = async () => {
         moment(sumarDias(new Date(), 9)).format("MMM Do YY"),
       ])
       .where('colonia', '==', `${colonia}`)
+      .where('ciudad', '==', `${ciudad}`)
       .get()
       .then((response) => {
         response.forEach((doc) => {
@@ -544,6 +546,7 @@ export const listarProductosPorCategoriaColonia = async (categoria) => {
   let user = obtenerUsuario().uid;
   let datosUSer = await obtenerRegistroXID('Usuarios', user);
   let colonia = datosUSer.data.colonia;
+  let ciudad = datosUSer.data.ciudad;
 
   if (colonia) {
     await db
@@ -551,6 +554,7 @@ export const listarProductosPorCategoriaColonia = async (categoria) => {
       .where("status", "==", 1)
       .where("categoria", "==", categoria)
       .where('colonia', '==', `${colonia}`)
+      .where('ciudad', '==', `${ciudad}`)
       .get()
       .then((response) => {
         response.forEach((doc) => {
@@ -669,6 +673,7 @@ export const listarVacantesMiColonia = async () => {
   let user = obtenerUsuario().uid;
   let datosUSer = await obtenerRegistroXID('Usuarios', user);
   let colonia = datosUSer.data.colonia;
+  let ciudad = datosUSer.data.ciudad;
 
   if (colonia) {
     await db
@@ -679,6 +684,7 @@ export const listarVacantesMiColonia = async () => {
         moment(sumarDias(new Date(), 1)).format("MMM Do YY"),
       ])
       .where('colonia', '==', `${colonia}`)
+      .where('ciudad', '==', `${ciudad}`)
       .get()
       .then((response) => {
         response.forEach((doc) => {
@@ -750,32 +756,6 @@ export const listarVacantesMiCiudad = async () => {
 
 };
 
-export const listarAnunciantes = async () => {
-  const anunciantesList = [];
-  let index = 0;
-
-  await db
-    .collection("Usuarios")
-    .get()
-    .then((response) => {
-      response.forEach((doc) => {
-        const anunciante = doc.data();
-        anunciante.id = doc.id;
-
-        anunciantesList.push(anunciante);
-      });
-    })
-    .catch((err) => console.log(err));
-
-  for (const registro of anunciantesList) {
-    const usuario = await obtenerRegistroXID("Usuarios", registro.usuario);
-    anunciantesList[index].usuario = usuario.data;
-    index++;
-  }
-
-  return anunciantesList;
-};
-
 export const setMensajeNotificacion = (token, titulo, body, data) => {
   const mensaje = {
     to: token,
@@ -845,4 +825,64 @@ export const listarNotificacionesLeidas = async () => {
     index++;
   }
   return respuesta;
+};
+
+export const listarAnunciantes = async () => {
+  const anunciantesList = [];
+  let index = 0;
+
+  await db
+    .collection("Usuarios")
+    .get()
+    .then((response) => {
+      response.forEach((doc) => {
+        const anunciante = doc.data();
+        anunciante.id = doc.id;
+
+        anunciantesList.push(anunciante);
+      });
+    })
+    .catch((err) => console.log(err));
+  return anunciantesList;
+
+};
+
+export const listarProductosPorAnunciante = async (anunciante) => {
+  const productosList = [];
+  let index = 0;
+
+  await db
+    .collection("Productos")
+    .where("status", "==", 1)
+    .where('fechavigencia', 'in', [
+      moment(new Date()).format("MMM Do YY"),
+      moment(sumarDias(new Date(), 1)).format("MMM Do YY"),
+      moment(sumarDias(new Date(), 2)).format("MMM Do YY"),
+      moment(sumarDias(new Date(), 3)).format("MMM Do YY"),
+      moment(sumarDias(new Date(), 4)).format("MMM Do YY"),
+      moment(sumarDias(new Date(), 5)).format("MMM Do YY"),
+      moment(sumarDias(new Date(), 6)).format("MMM Do YY"),
+      moment(sumarDias(new Date(), 7)).format("MMM Do YY"),
+      moment(sumarDias(new Date(), 8)).format("MMM Do YY"),
+      moment(sumarDias(new Date(), 9)).format("MMM Do YY"),
+    ])
+    //.where('usuario', '==', `${anunciante}`)
+    .get()
+    .then((response) => {
+      response.forEach((doc) => {
+        const producto = doc.data();
+        producto.id = doc.id;
+
+        productosList.push(producto);
+      });
+    })
+    .catch((err) => console.log(err));
+
+  for (const registro of productosList) {
+    const usuario = await obtenerRegistroXID("Usuarios", registro.usuario);
+    productosList[index].usuario = usuario.data;
+    index++;
+  }
+
+  return productosList;
 };
