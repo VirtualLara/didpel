@@ -39,7 +39,7 @@ export default function Vacantes() {
 
     function Vacante(props) {
         const { vacante, navigation } = props;
-        const { titulo, descripcion, salario, colonia, ciudad, usuario, id } = vacante.item;
+        const { titulo, descripcion, salario, colonia, ciudad, usuario, id, } = vacante.item;
         const { displayName, photoURL, phoneNumber } = usuario;
 
         return (
@@ -47,14 +47,12 @@ export default function Vacantes() {
                 style={styles.card}
                 onPress={() => { navigation.navigate('DetallesVancate', { id, titulo, descripcion, salario, colonia, ciudad }) }}
             >
-                <View style={styles.card}            >
+                <View style={styles.card}>
                     <View style={styles.infoBox} >
 
                         <Text style={styles.titulo} >{titulo}</Text>
-                        <Text >{descripcion}</Text>
-                        <Text > <Text style={styles.titulo} >Colonia: </Text>{colonia}</Text>
-                        <Text > <Text style={styles.titulo} >Ciudad: </Text>{ciudad}</Text>
-
+                        <Text >{descripcion.substring(0, 100)}...</Text>
+                        <Text > <Text style={styles.titulo}>Ciudad: </Text>{ciudad}</Text>
                         <View style={{ flexDirection: 'row' }} >
                             <Text style={styles.tituloSalario} ><Text style={styles.titulo} >Salario ofrecido: </Text> {formatoMoneda(parseInt(salario))} </Text>
                         </View>
@@ -159,13 +157,13 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         textAlign: 'center',
-        color: colorMarca,
+        color: colorBotonMiTienda,
     },
     tituloSalario: {
         fontSize: 18,
         fontWeight: 'bold',
         textAlign: 'center',
-        color: colorBotonMiTienda,
+        color: colorMarca,
     },
     publicadaPor: {
         fontSize: 18,

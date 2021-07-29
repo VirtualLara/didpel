@@ -866,7 +866,7 @@ export const listarProductosPorAnunciante = async (anunciante) => {
       moment(sumarDias(new Date(), 8)).format("MMM Do YY"),
       moment(sumarDias(new Date(), 9)).format("MMM Do YY"),
     ])
-    //.where('usuario', '==', `${anunciante}`)
+    .where('usuario', '==', `${anunciante}`)
     .get()
     .then((response) => {
       response.forEach((doc) => {

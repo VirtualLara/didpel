@@ -45,11 +45,13 @@ export default function Directorio() {
             <ScrollView>
 
                 {map(anunciantes, (anunciante) => (
-                    <TouchableOpacity onPress={() => { navigation.navigate('PublicacionesPorAnunciante', anunciante.route) }} key={anunciante.id}>
+                    <>
+                    <TouchableOpacity onPress={() => { navigation.navigate('PublicacionesPorAnunciante', { anunciante }) }} key={anunciante.id} >
                         <View style={{ justifyContent: 'center', alignItems: 'center', paddingTop: 10 }} >
                             <AnuncianteData photoURL={anunciante.photoURL} displayName={anunciante.displayName} />
                         </View>
                     </TouchableOpacity>
+                    </>
                 ))}
 
             </ScrollView>

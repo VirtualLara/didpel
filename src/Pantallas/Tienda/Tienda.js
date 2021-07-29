@@ -59,7 +59,7 @@ export default function Tienda() {
 
   function Producto(props) {
     const { producto, navigation } = props;
-    const { titulo, descripcion, precio, imagenes, rating, id, usuario, } = producto.item;
+    const { titulo, descripcion, precio, imagenes, rating, id, usuario, ciudad } = producto.item;
     const { displayName, photoURL } = usuario;
 
     return (
@@ -89,6 +89,7 @@ export default function Tienda() {
             readonly
           />
           <Text style={styles.precio} > {formatoMoneda(parseInt(precio))} </Text>
+          <Text style={styles.titulo} >Cd. {ciudad} </Text>
         </View>
       </TouchableOpacity>
     )
@@ -138,7 +139,7 @@ if (size(list)>0) {
                 search={search}
                 setMensajes={setMensajes}
                 placeholder={'Buscalo - Encuentralo - Adquierelo'}
-                query={`SELECT * FROM Productos WHERE titulo LIKE '${search}%' OR descripcion LIKE '${search}%'`}
+                query={`SELECT * FROM Productos WHERE titulo LIKE '${search}%' OR descripcion LIKE '${search}%' OR ciudad LIKE '${search}%'`}
               />
             </View>
 

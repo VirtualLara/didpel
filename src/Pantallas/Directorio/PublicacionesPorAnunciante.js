@@ -13,7 +13,7 @@ import Modal from '../../Componentes/Modal';
 export default function PublicacionesPorAnunciante(props) {
 
     const { route } = props;
-    console.log(route.params)
+    const idAnunciante = route.params.anunciante.id;
 
     const navigation = useNavigation();
     const [list, setList] = useState([]);
@@ -25,8 +25,9 @@ export default function PublicacionesPorAnunciante(props) {
 
     useFocusEffect(
         useCallback(() => {
+
             (async () => {
-                setList(await listarProductosPorAnunciante());
+                setList(await listarProductosPorAnunciante(idAnunciante));
             })()
         }, [])
     );
