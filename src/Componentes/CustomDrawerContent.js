@@ -1,94 +1,123 @@
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import { NavigationContainer } from '@react-navigation/native';
+import { StyleSheet, View, Text, Image } from "react-native";
+import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
 import { Avatar, Icon } from "react-native-elements";
-import { ObtenerUsuario, cerrarsesion } from "../Utils/Acciones";
 
-
-const Drawer = createDrawerNavigator();
+import { obtenerUsuario, cerrarsesion } from "../Utils/Acciones";
+import { colorMarca, colorBotonMiTienda } from '../Utils/colores';
 
 export default function CustomDrawerContent(props) {
-
-  const { displayName, photoURL, email } = ObtenerUsuario();
+  const { displayName, photoURL, email } = obtenerUsuario();
 
   return (
     <View style={{ flex: 1 }}>
       <DrawerContentScrollView {...props}>
         <View style={styles.drawerContent}>
           <View style={styles.userInfoSection}>
-            <View style={{ flexDirection: "row", marginTop: 15 }}>
+
+            <Image source={require('../../assets/personasprueba.jpg')} style={styles.logo} />
+
+            <View style={{ flexDirection: "row", marginTop: 15, alignItems: 'center' }}>
               <Avatar
                 rounded
+                style={styles.avatar}
                 size="medium"
-                source={
-                  photoURL
-                    ? { uri: photoURL }
-                    : require("../../assets/avatar.jpg")
-                }
-                onPress={() => navigation.toggleDrawer()}
+                source={photoURL ? { uri: photoURL } : require("../../assets/avatar.jpg")}
               />
-
-              <View style={{ marginLeft: 15, flexDirection: "column" }}>
-                <Text style={styles.title}>{displayName}</Text>
-                <Text style={styles.caption}>{email} </Text>
-              </View>
+              <Text style={styles.title}>{displayName}</Text>
             </View>
+
+            <Text style={styles.caption}>{email} </Text>
+
           </View>
 
           <View style={styles.drawerSection}>
             <DrawerItem
-              icon={({ color, size }) => (
+              icon={() => (
                 <Icon
                   name="cart-outline"
-                  color={color}
-                  size={size}
+                  color={colorBotonMiTienda}
+                  size={35}
                   type="material-community"
                 />
               )}
               label="Tienda"
               onPress={() => {
-                props.navigation.navigate("tienda");
+                props.navigation.navigate("Tienda");
               }}
             />
+
             <DrawerItem
-              icon={({ color, size }) => (
+              icon={() => (
+                <Icon
+                  name="book"
+                  color={colorBotonMiTienda}
+                  size={35}
+                  type="material-community"
+                />
+              )}
+              label="Directorio"
+              onPress={() => {
+                props.navigation.navigate("Directorio");
+              }}
+            />
+
+            <DrawerItem
+              icon={() => (
                 <Icon
                   name="store"
-                  color={color}
-                  size={size}
+                  color={colorBotonMiTienda}
+                  size={35}
                   type="material-community"
                 />
               )}
               label="Mi Tienda"
               onPress={() => {
-                props.navigation.navigate("mitienda");
+                props.navigation.navigate("MiTienda");
               }}
             />
+
             <DrawerItem
-              icon={({ color, size }) => (
+              icon={() => (
                 <Icon
-                  name="account-outline"
-                  color={color}
-                  size={size}
+                  name="file"
+                  color={colorBotonMiTienda}
+                  size={35}
                   type="material-community"
                 />
               )}
-              label="Cuenta"
+              label="Vacantes"
               onPress={() => {
-                props.navigation.navigate("cuenta");
+                props.navigation.navigate("Vacantes");
               }}
             />
+
+            <DrawerItem
+              icon={() => (
+                <Icon
+                  name="account-outline"
+                  color={colorBotonMiTienda}
+                  size={35}
+                  type="material-community"
+                />
+              )}
+              label="Mi Perfil"
+              onPress={() => {
+                props.navigation.navigate("Perfil");
+              }}
+            />
+
           </View>
+
         </View>
       </DrawerContentScrollView>
       <View style={styles.bottomDrawerSection}>
         <DrawerItem
-          icon={({ color, size }) => (
+          icon={() => (
             <Icon
               name="exit-to-app"
-              color={color}
-              size={size}
+              color={colorMarca}
+              size={35}
               type="material-community"
             />
           )}
@@ -109,14 +138,28 @@ const styles = StyleSheet.create({
   userInfoSection: {
     paddingLeft: 20,
   },
+  logo: {
+    width: 250,
+    height: 150,
+  },
+  avatar: {
+    height: 50,
+    width: 50,
+  },
   title: {
-    fontSize: 16,
+    marginLeft: 20,
+    fontSize: 20,
     marginTop: 3,
     fontWeight: "bold",
+    color: colorBotonMiTienda
   },
   caption: {
-    fontSize: 14,
+    fontSize: 16,
     lineHeight: 14,
+    fontWeight: '700',
+    color: colorMarca,
+    textAlign: 'center',
+    paddingTop: 15
   },
   row: {
     marginTop: 20,

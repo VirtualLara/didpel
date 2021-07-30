@@ -13,14 +13,14 @@ import Modal from '../../Componentes/Modal';
 export default function PublicacionesPorAnunciante(props) {
 
     const { route } = props;
-    const idAnunciante = route.params.anunciante.id;
+    const idAnunciante = route.params.anunciante.item.id;
+
+    console.log(idAnunciante)
 
     const navigation = useNavigation();
     const [list, setList] = useState([]);
     const [mensajes, setMensajes] = useState('Cargando...');
     const [categoria, setCategoria] = useState('');
-    const [loading, setLoading] = useState(false);
-    const [isVisible, setIsVisible] = useState(false);
     const usuarioActual = obtenerUsuario();
 
     useFocusEffect(
@@ -33,7 +33,7 @@ export default function PublicacionesPorAnunciante(props) {
     );
 
     function Producto(props) {
-        const { producto, navigation } = props;
+        const { producto } = props;
         const { titulo, descripcion, precio, imagenes, rating, id, usuario, } = producto.item;
         const { displayName, photoURL, phoneNumber } = usuario;
 

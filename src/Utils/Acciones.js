@@ -847,6 +847,74 @@ export const listarAnunciantes = async () => {
 
 };
 
+export const listarAnunciantesMiColonia = async () => {
+  const anunciantesList = [];
+  let index = 0;
+
+  let user = obtenerUsuario().uid;
+  let datosUSer = await obtenerRegistroXID('Usuarios', user);
+  let colonia = datosUSer.data.colonia;
+  let ciudad = datosUSer.data.ciudad;
+
+  if (colonia) {
+    await db
+      .collection("Usuarios")
+      .where('colonia', '==', `${colonia}`)
+      .where('ciudad', '==', `${ciudad}`)
+      .get()
+      .then((response) => {
+        response.forEach((doc) => {
+          const anunciante = doc.data();
+          anunciante.id = doc.id;
+
+          anunciantesList.push(anunciante);
+        });
+      })
+      .catch((err) => console.log(err));
+
+    return anunciantesList;
+
+  } else {
+
+    return anunciantesList;
+
+  }
+
+};
+
+export const listarAnunciantesMiCiudad = async () => {
+  const anunciantesList = [];
+  let index = 0;
+
+  let user = obtenerUsuario().uid;
+  let datosUSer = await obtenerRegistroXID('Usuarios', user);
+  let ciudad = datosUSer.data.ciudad;
+
+  if (ciudad) {
+    await db
+      .collection("Usuarios")
+      .where('ciudad', '==', `${ciudad}`)
+      .get()
+      .then((response) => {
+        response.forEach((doc) => {
+          const anunciante = doc.data();
+          anunciante.id = doc.id;
+
+          anunciantesList.push(anunciante);
+        });
+      })
+      .catch((err) => console.log(err));
+
+    return anunciantesList;
+
+  } else {
+
+    return anunciantesList;
+
+  }
+
+};
+
 export const listarProductosPorAnunciante = async (anunciante) => {
   const productosList = [];
   let index = 0;

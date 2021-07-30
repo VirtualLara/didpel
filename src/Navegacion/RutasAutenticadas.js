@@ -1,20 +1,21 @@
 import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import CustomDrawerContent from "../Componentes/CustomDrawerContent";
 import { Icon } from 'react-native-elements';
 import { colorMarca } from '../Utils/colores';
 
 import TiendaStack from './TiendaStack';
-import PerfilStack from './PerfilStack';
-import MiTienda from './MiTiendaStack';
 import Directorio from './DirectorioStack';
-import Vacantes from './VacantesStack';
 import ShopButton from '../Componentes/ShopButton';
-
-import CustomDrawerContent from '../Componentes/CustomDrawerContent';
-
+import MiTienda from './MiTiendaStack';
+import Vacantes from './VacantesStack';
+import PerfilStack from './PerfilStack';
 
 const Tab = createBottomTabNavigator();
+const Drawer = createDrawerNavigator();
+
 const TabBar = () => {
     return (
         <Tab.Navigator
@@ -66,14 +67,6 @@ const TabBar = () => {
     )
 }
 
-export default function RutasAutenticadas() {
-    return (
-        <NavigationContainer>
-            <TabBar />
-        </NavigationContainer>
-    );
-}
-
 function mostrarIcono(route, color) {
 
     let iconName = ''
@@ -103,3 +96,25 @@ function mostrarIcono(route, color) {
         <Icon type='material-community' name={iconName} size={24} color={color} />
     )
 }
+
+export default function RutasAutenticadas() {
+    return (
+        <NavigationContainer>
+            <Drawer.Navigator
+                drawerContent={(props) => <CustomDrawerContent {...props} />}
+            >
+                <Drawer.Screen
+                    name="Tienda"
+                    component={TabBar}
+                    options={{
+                        title: "Tienda",
+                        drawerIcon: () => {
+                            <Icon type="material-community" name="store" size={24} />;
+                        },
+                    }}
+                />
+            </Drawer.Navigator>
+        </NavigationContainer>
+    );
+}
+

@@ -51,6 +51,7 @@ export default function VacantesMiColonia() {
 
                         <Text style={styles.titulo} >{titulo.substring(0, 30)}...</Text>
                         <Text style={{ fontSize: 18, color: colorBotonMiTienda, fontWeight: 'bold' }} >{descripcion.substring(0, 35)}...</Text>
+                        <Text style={{ fontSize: 18 }} ><Text style={styles.titulo} >Colonia: </Text>{colonia}</Text>
                         <Text style={{ fontSize: 18 }} ><Text style={styles.titulo} >Ciudad: </Text>{ciudad}</Text>
 
                         <View style={{ flexDirection: 'row' }} >

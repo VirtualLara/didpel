@@ -62,7 +62,7 @@ export default function TiendaMiCiudad() {
 
   function Producto(props) {
     const { producto, navigation } = props;
-    const { titulo, descripcion, precio, imagenes, rating, id, usuario, } = producto.item;
+    const { titulo, descripcion, precio, imagenes, rating, id, usuario, ciudad } = producto.item;
     const { displayName, photoURL } = usuario;
 
     return (
@@ -81,6 +81,7 @@ export default function TiendaMiCiudad() {
             readonly
           />
           <Text style={styles.precio} > {formatoMoneda(parseInt(precio))} </Text>
+          <Text style={styles.titulo} >Cd. {ciudad} </Text>
         </View>
       </TouchableOpacity>
     )
