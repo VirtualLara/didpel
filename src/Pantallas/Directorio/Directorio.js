@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { StyleSheet, Text, View, StatusBar, ScrollView, FlatList, TouchableOpacity } from 'react-native';
 import { useNavigation, useFocusEffect, } from '@react-navigation/native';
-import { Avatar, } from 'react-native-elements';
+import { Avatar, Icon } from 'react-native-elements';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { size, map } from 'lodash';
 
@@ -43,15 +43,28 @@ export default function Directorio() {
             <StatusBar backgroundColor={colorMarca} />
 
             <View style={styles.header} >
-                <Busqueda
-                    setList={setList}
-                    actualizar={actualizarlist}
-                    setSearch={setSearch}
-                    search={search}
-                    setMensajes={setMensajes}
-                    placeholder={'Buscalo - Encuentralo - Adquierelo'}
-                    query={`SELECT * FROM Usuarios WHERE displayName LIKE '${search}%'`}
-                />
+
+                <View style={{ width: '10%', justifyContent: 'center', alignItems: 'center' }} >
+                    <Icon
+                        type='material-community'
+                        name='menu'
+                        color='#fff'
+                        size={50}
+                        onPress={() => { navigation.openDrawer() }}
+                    />
+                </View>
+
+                <View style={{ width: '90%' }}>
+                    <Busqueda
+                        setList={setList}
+                        actualizar={actualizarlist}
+                        setSearch={setSearch}
+                        search={search}
+                        setMensajes={setMensajes}
+                        placeholder={'Buscar por nombre de anunciante'}
+                        query={`SELECT * FROM Usuarios WHERE displayName LIKE '${search}%' OR colonia LIKE '${search}%' OR ciudad LIKE '${search}%'`}
+                    />
+                </View>
             </View>
 
             {
@@ -119,11 +132,12 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
     },
     header: {
-        height: '10%',
+        height: '11%',
         width: '100%',
         backgroundColor: colorMarca,
         alignContent: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        flexDirection: 'row'
     },
     avatar: {
         width: 60,

@@ -29,7 +29,7 @@ export default function Busqueda(props) {
       placeholder={placeholder}
       containerStyle={{ backgroundColor: 'transparent', borderTopColor: 'transparent', borderBottomColor: 'transparent' }}
       inputContainerStyle={{ backgroundColor: '#fff', alignItems: 'center' }}
-      inputStyle={{ fontFamily: 'Roboto', fontSize: 15 }}
+      inputStyle={{ fontFamily: 'Roboto', fontSize: 14 }}
       onChangeText={(text) => setSearch(text)}
       value={search}
       onClear={() => {

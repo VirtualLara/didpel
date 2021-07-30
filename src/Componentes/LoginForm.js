@@ -49,7 +49,7 @@ export default function LoginForm(props) {
 
       <Input placeholder='Correo'
         containerStyle={styles.input}
-        rightIcon={{ type: 'material-community', name: 'at', color: colorMarca, onPress: () => alert('hola'), }}
+        rightIcon={{ type: 'material-community', name: 'at', color: colorMarca, }}
         leftIcon={{ type: 'material-community', name: 'account-circle-outline', color: colorMarca, }}
         onChangeText={(text) => { setEmail(text) }}
         value={email}
@@ -108,7 +108,7 @@ export default function LoginForm(props) {
         </TouchableOpacity>
       </View>
 
-      <Loading isVisible={loading} text='Facor de esperar...' />
+      <Loading isVisible={loading} text='Favor de esperar...' />
 
     </View>
   );

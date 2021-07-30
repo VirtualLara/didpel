@@ -1,10 +1,13 @@
 import React from 'react';
+import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import CustomDrawerContent from "../Componentes/CustomDrawerContent";
 import { Icon } from 'react-native-elements';
-import { colorMarca } from '../Utils/colores';
+import { colorMarca, colorBotonMiTienda } from '../Utils/colores';
+
+import AwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
 import TiendaStack from './TiendaStack';
 import Directorio from './DirectorioStack';
@@ -13,37 +16,41 @@ import MiTienda from './MiTiendaStack';
 import Vacantes from './VacantesStack';
 import PerfilStack from './PerfilStack';
 
-const Tab = createBottomTabNavigator();
+const Tab = createMaterialBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 
 const TabBar = () => {
     return (
-        <Tab.Navigator
+        /* <Tab.Navigator
             initialRouteName='tienda'
+            screenOptions={({ route }) => ({
+                tabBarIcon: (color) => mostrarIcono(route, color),
+            })}
             tabBarOptions={{
                 inactiveTintColor: '#fff',
                 activeTintColor: '#fff',
                 style: {
-                    //borderTopLeftRadius: 60,
-                    //borderTopRightRadius: 60,
                     alignItems: 'center',
                     backgroundColor: colorMarca,
                     paddingBottom: 5,
                 }
             }}
+        > */
+
+        <Tab.Navigator activeColor="#fff" barStyle={styles.navigationStyle}
+            initialRouteName='tienda'
             screenOptions={({ route }) => ({
-                tabBarIcon: ({ color }) => mostrarIcono(route, color),
-            })}
-        >
+                tabBarIcon: (routeStatus) => {
+                    return mostrarIcono(route, routeStatus);
+                }
+            })}>
             <Tab.Screen
                 component={TiendaStack}
                 name='Tienda'
-                options={{ title: 'Tienda' }}
             />
             <Tab.Screen
                 component={Directorio}
                 name='Directorio'
-                options={{ title: 'Directorio' }}
             />
             <Tab.Screen
                 component={MiTienda}
@@ -55,25 +62,22 @@ const TabBar = () => {
             />
             <Tab.Screen
                 component={Vacantes}
-                name='Vacantes'
-                options={{ title: 'Vacantes' }}
+                name='Empleo'
             />
             <Tab.Screen
                 component={PerfilStack}
                 name='Perfil'
-                options={{ title: 'Perfil' }}
             />
         </Tab.Navigator>
     )
 }
 
-function mostrarIcono(route, color) {
-
-    let iconName = ''
+function mostrarIcono(route, routeStatus) {
+    let iconName = "";
 
     switch (route.name) {
         case 'Tienda':
-            iconName = 'cart-outline'
+            iconName = 'shopping-cart'
             break;
 
         case 'Directorio':
@@ -81,20 +85,18 @@ function mostrarIcono(route, color) {
             break;
 
         case 'MiTienda':
-            iconName = 'cart-outline'
+            iconName = 'cart-plus'
             break;
 
-        case 'Vacantes':
+        case 'Empleo':
             iconName = 'file'
             break;
 
         case 'Perfil':
-            iconName = 'account-circle-outline'
+            iconName = 'user'
             break;
     }
-    return (
-        <Icon type='material-community' name={iconName} size={24} color={color} />
-    )
+    return <AwesomeIcon name={iconName} style={styles.icon} />
 }
 
 export default function RutasAutenticadas() {
@@ -118,3 +120,14 @@ export default function RutasAutenticadas() {
     );
 }
 
+
+const styles = StyleSheet.create({
+    navigationStyle: {
+        backgroundColor: colorMarca,
+        color: colorMarca,
+    },
+    icon: {
+        fontSize: 23,
+        color: '#fff'
+    },
+})

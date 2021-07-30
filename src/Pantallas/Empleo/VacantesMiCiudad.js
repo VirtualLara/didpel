@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { View, Text, StatusBar, StyleSheet, FlatList, TouchableOpacity, ActivityIndicator } from "react-native";
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import { Icon } from 'react-native-elements';
 import { size, } from 'lodash';
 
 import { listarVacantesMiCiudad, } from '../../Utils/Acciones';
@@ -68,17 +69,31 @@ export default function VacantesMiCiudad() {
             <View style={styles.frame} >
                 <StatusBar backgroundColor={colorMarca} />
 
+
                 <View style={styles.header} >
-                    <Busqueda
-                        setList={setList}
-                        actualizar={actualizarVacantes}
-                        setSearch={setSearch}
-                        search={search}
-                        setMensajes={setMensajes}
-                        placeholder={'Buscar actvidad - oficio - colonia - ciudad'}
-                        //query={`SELECT * FROM Vacantes WHERE titulo LIKE '${search}%' OR descripcion LIKE '${search}%' OR colonia LIKE '${search}%' OR ciudad LIKE '${search}%'`}
-                        query={`SELECT * FROM Vacantes WHERE titulo LIKE '${search}%' OR descripcion LIKE '${search}%'`}
-                    />
+
+                    <View style={{ width: '10%', justifyContent: 'center', alignItems: 'center' }} >
+                        <Icon
+                            type='material-community'
+                            name='menu'
+                            color='#fff'
+                            size={50}
+                            onPress={() => { navigation.openDrawer() }}
+                        />
+                    </View>
+
+                    <View style={{ width: '90%', }} >
+                        <Busqueda
+                            setList={setList}
+                            actualizar={actualizarVacantes}
+                            setSearch={setSearch}
+                            search={search}
+                            setMensajes={setMensajes}
+                            placeholder={'Buscar actvidad - oficio - colonia - ciudad'}
+                            //query={`SELECT * FROM Vacantes WHERE titulo LIKE '${search}%' OR descripcion LIKE '${search}%' OR colonia LIKE '${search}%' OR ciudad LIKE '${search}%'`}
+                            query={`SELECT * FROM Vacantes WHERE titulo LIKE '${search}%' OR descripcion LIKE '${search}%' OR colonia LIKE '${search}%'`}
+                        />
+                    </View>
                 </View>
                 {size(list) > 0 ? (
                     <FlatList
@@ -118,11 +133,12 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff'
     },
     header: {
-        height: '10%',
+        height: '11%',
         width: '100%',
         backgroundColor: colorMarca,
         alignContent: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        flexDirection: 'row'
     },
 
     menu: {

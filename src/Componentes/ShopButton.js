@@ -24,14 +24,14 @@ const styles = StyleSheet.create({
     backgroundColor: colorBotonMiTienda,
     alignItems: 'center',
     justifyContent: 'center',
-    width: 60,
-    height: 60,
+    width: 55,
+    height: 55,
     borderRadius: 35,
-    top: -5,
+    top: -15,
     shadowRadius: 5,
     shadowOffset: { height: 10 },
     shadowOpacity: 0.3,
-    borderWidth: 3,
+    borderWidth: 2.5,
     borderColor: '#fff',
   }
 })

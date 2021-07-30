@@ -123,7 +123,17 @@ export default function TiendaMiColonia() {
 
             <View style={styles.menu} >
 
-              <View style={{ width: '85%' }}  >
+              <View style={{ width: '10%', justifyContent: 'center', alignItems: 'center' }} >
+                <Icon
+                  type='material-community'
+                  name='menu'
+                  color='#fff'
+                  size={50}
+                  onPress={() => { navigation.openDrawer() }}
+                />
+              </View>
+
+              <View style={{ width: '80%' }}  >
                 <Busqueda
                   setList={setList}
                   actualizar={actualizarProductos}

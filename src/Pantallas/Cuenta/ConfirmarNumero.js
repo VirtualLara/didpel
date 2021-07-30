@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Image, Alert } from "react-native";
 import CodeInput from 'react-native-confirmation-code-input';
 import { useNavigation } from '@react-navigation/native';
 import { colorMarca, publicacionesIniciales } from '../../Utils/colores';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import Loading from '../../Componentes/Loading';
 import { confirmarCodigo, obtenerToken, obtenerUsuario, addRegisterEspecifico, } from '../../Utils/Acciones';
@@ -58,21 +59,25 @@ export default function ConfirmarNumero(props) {
     <View style={styles.container} >
       <Image source={require('../../../assets/logo.png')} style={styles.imgeLogo} />
       <Text style={styles.text} >Favor de revisar el SMS recibido e introducir el código de verificación.</Text>
-      <CodeInput
-        activeColor='#fff'
-        inactiveColor='#fff'
-        autofocus={true}
-        inputPosition='center'
-        size={50}
-        codeLength={6}
-        //secureTextEntry
-        keyboardType="numeric"
-        containerStyle={{ marginTop: 30 }}
-        codeInputStyle={{ borderWidth: 1.5 }}
-        onFulfill={(code) => {
-          confirmarCodigoSMS(code)
-        }}
-      />
+
+      <KeyboardAwareScrollView>
+        <CodeInput
+          activeColor='#fff'
+          inactiveColor='#fff'
+          autofocus={true}
+          inputPosition='center'
+          size={50}
+          codeLength={6}
+          //secureTextEntry
+          keyboardType="numeric"
+          containerStyle={{ marginTop: 30 }}
+          codeInputStyle={{ borderWidth: 1.5 }}
+          onFulfill={(code) => {
+            confirmarCodigoSMS(code)
+          }}
+        />
+      </KeyboardAwareScrollView>
+
       <Loading isVisible={loading} text='Favor de esperar...' />
     </View>
   );

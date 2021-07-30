@@ -141,7 +141,7 @@ export default function AgregarVacante() {
                 errorMessage={errores.ciudad}
             />
 
-            <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', }} >
+            {/* <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', }} >
                 <Text style={styles.txtLabelWarning} > Hacer pública esta oferta </Text>
                 <CheckBox
                     style={styles.checkbox}
@@ -186,7 +186,7 @@ export default function AgregarVacante() {
 
                     }
                 />
-            </View>
+            </View> */}
 
             <Button
                 title='Publicar Oferta de Empleo'

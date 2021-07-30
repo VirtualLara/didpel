@@ -1,9 +1,10 @@
 import React from "react";
-import { StyleSheet, View, Text, Image } from "react-native";
+import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
-import { Avatar, Icon } from "react-native-elements";
+import { Avatar, } from "react-native-elements";
+import Icon from "react-native-vector-icons/FontAwesome";
 
-import { obtenerUsuario, cerrarsesion } from "../Utils/Acciones";
+import { obtenerUsuario, cerrarSesion } from "../Utils/Acciones";
 import { colorMarca, colorBotonMiTienda } from '../Utils/colores';
 
 export default function CustomDrawerContent(props) {
@@ -32,102 +33,85 @@ export default function CustomDrawerContent(props) {
           </View>
 
           <View style={styles.drawerSection}>
-            <DrawerItem
-              icon={() => (
-                <Icon
-                  name="cart-outline"
-                  color={colorBotonMiTienda}
-                  size={35}
-                  type="material-community"
-                />
-              )}
-              label="Tienda"
-              onPress={() => {
-                props.navigation.navigate("Tienda");
-              }}
+
+            <DrawerMenu
+              iconName="shopping-cart"
+              titleName="Tienda"
+              navigation={() => props.navigation.navigate("Tienda")}
             />
 
-            <DrawerItem
-              icon={() => (
-                <Icon
-                  name="book"
-                  color={colorBotonMiTienda}
-                  size={35}
-                  type="material-community"
-                />
-              )}
-              label="Directorio"
-              onPress={() => {
-                props.navigation.navigate("Directorio");
-              }}
+            <DrawerMenu
+              iconName="book"
+              titleName="Directorio"
+              navigation={() => props.navigation.navigate("Directorio")}
             />
 
-            <DrawerItem
-              icon={() => (
-                <Icon
-                  name="store"
-                  color={colorBotonMiTienda}
-                  size={35}
-                  type="material-community"
-                />
-              )}
-              label="Mi Tienda"
-              onPress={() => {
-                props.navigation.navigate("MiTienda");
-              }}
+            <DrawerMenu
+              iconName="cart-plus"
+              titleName="Mis publicaciones"
+              navigation={() => props.navigation.navigate("MiTienda")}
             />
 
-            <DrawerItem
-              icon={() => (
-                <Icon
-                  name="file"
-                  color={colorBotonMiTienda}
-                  size={35}
-                  type="material-community"
-                />
-              )}
-              label="Vacantes"
-              onPress={() => {
-                props.navigation.navigate("Vacantes");
-              }}
+            <DrawerMenu
+              iconName="file"
+              titleName="Empleo"
+              navigation={() => props.navigation.navigate("Vacantes")}
             />
 
-            <DrawerItem
-              icon={() => (
-                <Icon
-                  name="account-outline"
-                  color={colorBotonMiTienda}
-                  size={35}
-                  type="material-community"
-                />
-              )}
-              label="Mi Perfil"
-              onPress={() => {
-                props.navigation.navigate("Perfil");
-              }}
+            <DrawerMenu
+              iconName="user"
+              titleName="Mi Perfil"
+              navigation={() => props.navigation.navigate("Perfil")}
+            />
+
+            <DrawerMenu
+              iconName="plus-square"
+              titleName="Oferta de empleo"
+              navigation={() => props.navigation.navigate("AgregarVacante")}
             />
 
           </View>
 
         </View>
       </DrawerContentScrollView>
+
       <View style={styles.bottomDrawerSection}>
-        <DrawerItem
-          icon={() => (
-            <Icon
-              name="exit-to-app"
-              color={colorMarca}
-              size={35}
-              type="material-community"
-            />
-          )}
-          label="Cerrar Sesión"
-          onPress={() => {
-            cerrarsesion();
-          }}
-        />
+        <DrawerClose
+          iconName="times-circle"
+          titleName="Cerrar Sesión" />
       </View>
+
     </View>
+  );
+}
+
+function DrawerMenu(props) {
+  return (
+    <TouchableOpacity onPress={props.navigation}>
+      <View style={styles.viewDrawerMenu}>
+        <View>
+          <Icon style={styles.iconDrawerMenu} name={props.iconName} />
+        </View>
+        <View>
+          <Text style={styles.textDrawerMenu}> {props.titleName} </Text>
+        </View>
+      </View>
+    </TouchableOpacity>
+  );
+}
+
+function DrawerClose(props) {
+  return (
+    <TouchableOpacity onPress={() => cerrarSesion()} >
+      <View style={styles.viewDrawerMenuClose}>
+        <View>
+          <Icon style={styles.iconDrawerMenuClose} name={props.iconName} />
+        </View>
+        <View>
+          <Text style={styles.textDrawerMenuclose}> {props.titleName} </Text>
+        </View>
+      </View>
+    </TouchableOpacity>
   );
 }
 
@@ -177,16 +161,62 @@ const styles = StyleSheet.create({
   },
   drawerSection: {
     marginTop: 15,
+    justifyContent: 'center',
   },
   bottomDrawerSection: {
-    marginBottom: 15,
-    borderTopColor: "#f4f4f4",
-    borderTopWidth: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: colorMarca
   },
   preference: {
     flexDirection: "row",
     justifyContent: "space-between",
     paddingVertical: 12,
     paddingHorizontal: 16,
+  },
+  viewDrawerMenu: {
+    width: "100%",
+    flexDirection: "row",
+    marginLeft: 7,
+    marginRight: 7,
+    marginTop: 3,
+    marginBottom: 3,
+    paddingHorizontal: 5,
+    alignItems: 'center',
+  },
+  textDrawerMenu: {
+    fontSize: 22,
+    fontWeight: "bold",
+    margin: 5,
+    padding: 5,
+    color: colorBotonMiTienda,
+  },
+  iconDrawerMenu: {
+    fontSize: 22,
+    fontWeight: "bold",
+    margin: 5,
+    padding: 5,
+    color: colorBotonMiTienda,
+  },
+  viewDrawerMenuClose: {
+    width: "100%",
+    flexDirection: "row",
+    marginLeft: 7,
+    marginRight: 7,
+    marginTop: 3,
+    marginBottom: 3,
+    paddingHorizontal: 5,
+    alignItems: 'center',
+  },
+  textDrawerMenuclose: {
+    fontSize: 22,
+    fontWeight: "bold",
+    margin: 5,
+    padding: 5,
+    color: '#fff',
+  },
+  iconDrawerMenuClose: {
+    fontSize: 40,
+    color: '#fff',
   },
 });
