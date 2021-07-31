@@ -6,6 +6,7 @@ import { colorMarca } from '../Utils/colores';
 import MiTienda from "../Pantallas/Mitienda/MiTienda";
 import EditarProducto from "../Pantallas/Mitienda/EditarProducto";
 import AgregarProducto from "../Pantallas/Mitienda/AgregarProducto";
+import AdquirirSuscripcion from "../Pantallas/Mitienda/AdquirirSuscripcion";
 
 
 export default function MitiendaStack() {
@@ -42,6 +43,11 @@ export default function MitiendaStack() {
         name="EditarProducto"
         component={EditarProducto}
         options={{ title: "Editar Producto" }}
+      />
+      <Stack.Screen
+        name="AdquirirSuscripcion"
+        component={AdquirirSuscripcion}
+        options={{ title: "Adquirir publicaciones" }}
       />
     </Stack.Navigator>
 

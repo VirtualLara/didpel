@@ -14,20 +14,21 @@ export default function CustomDrawerContent(props) {
     <View style={{ flex: 1 }}>
       <DrawerContentScrollView {...props}>
         <View style={styles.drawerContent}>
+
           <View style={styles.userInfoSection}>
 
             <Image source={require('../../assets/personasprueba.jpg')} style={styles.logo} />
 
-            <View style={{ flexDirection: "row", marginTop: 15, alignItems: 'center' }}>
+            <View style={{ flexDirection: "row", marginTop: 15, alignItems: 'center', justifyContent: 'center' }}>
               <Avatar
                 rounded
                 style={styles.avatar}
                 size="medium"
                 source={photoURL ? { uri: photoURL } : require("../../assets/avatar.jpg")}
               />
-              <Text style={styles.title}>{displayName}</Text>
             </View>
 
+            <Text style={styles.title}>{displayName}</Text>
             <Text style={styles.caption}>{email} </Text>
 
           </View>
@@ -47,7 +48,7 @@ export default function CustomDrawerContent(props) {
             />
 
             <DrawerMenu
-              iconName="cart-plus"
+              iconName="list"
               titleName="Mis publicaciones"
               navigation={() => props.navigation.navigate("MiTienda")}
             />
@@ -59,16 +60,23 @@ export default function CustomDrawerContent(props) {
             />
 
             <DrawerMenu
+              iconName="plus-square"
+              titleName="Oferta de empleo"
+              navigation={() => props.navigation.navigate("AgregarVacante")}
+            />
+
+            <DrawerMenu
               iconName="user"
               titleName="Mi Perfil"
               navigation={() => props.navigation.navigate("Perfil")}
             />
 
             <DrawerMenu
-              iconName="plus-square"
-              titleName="Oferta de empleo"
-              navigation={() => props.navigation.navigate("AgregarVacante")}
+              iconName="cart-plus"
+              titleName="Adquirir Suscripción"
+              navigation={() => props.navigation.navigate("AdquirirSuscripcion")}
             />
+
 
           </View>
 
@@ -120,30 +128,27 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   userInfoSection: {
-    paddingLeft: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   logo: {
     width: 250,
     height: 150,
   },
   avatar: {
-    height: 50,
-    width: 50,
+    height: 80,
+    width: 80,
   },
   title: {
-    marginLeft: 20,
     fontSize: 20,
     marginTop: 3,
     fontWeight: "bold",
     color: colorBotonMiTienda
   },
   caption: {
-    fontSize: 16,
-    lineHeight: 14,
+    fontSize: 14,
     fontWeight: '700',
     color: colorMarca,
-    textAlign: 'center',
-    paddingTop: 15
   },
   row: {
     marginTop: 20,
@@ -177,10 +182,6 @@ const styles = StyleSheet.create({
   viewDrawerMenu: {
     width: "100%",
     flexDirection: "row",
-    marginLeft: 7,
-    marginRight: 7,
-    marginTop: 3,
-    marginBottom: 3,
     paddingHorizontal: 5,
     alignItems: 'center',
   },
@@ -201,11 +202,6 @@ const styles = StyleSheet.create({
   viewDrawerMenuClose: {
     width: "100%",
     flexDirection: "row",
-    marginLeft: 7,
-    marginRight: 7,
-    marginTop: 3,
-    marginBottom: 3,
-    paddingHorizontal: 5,
     alignItems: 'center',
   },
   textDrawerMenuclose: {
