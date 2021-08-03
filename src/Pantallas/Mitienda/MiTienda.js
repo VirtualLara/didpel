@@ -73,14 +73,14 @@ export default function MiTienda() {
         }}
         reverse
       />
-      {/* <Icon
+      <Icon
         name='cart-plus'
         type='material-community'
         color={colorBotonMiTienda}
         containerStyle={styles.containerBtnSuscription}
         onPress={() => { navigation.navigate('AdquirirSuscripcion') }}
         reverse
-      /> */}
+      />
     </View>
   );
 }

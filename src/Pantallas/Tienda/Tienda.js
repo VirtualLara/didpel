@@ -228,8 +228,6 @@ export default function TiendaMiCiudad() {
           </View>
         </View>
 
-
-
         {
           size(list) > 0 ? (
             <FlatList

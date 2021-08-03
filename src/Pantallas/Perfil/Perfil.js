@@ -277,6 +277,15 @@ export default function Perfil(props) {
           </TouchableOpacity>
         </View>
 
+        <View style={{ height: 80, justifyContent: 'center', alignItems: 'center', paddingBottom: 20 }} >
+          <TouchableOpacity
+            style={{ height: 50, width: '90%', justifyContent: 'center', alignItems: 'center', backgroundColor: colorMarca }}
+            onPress={() => { navigation.navigate('IdCliente') }}
+          >
+            <Text style={{ fontSize: 18, color: '#fff', fontWeight: 'bold', textAlign: 'center', alignSelf: 'center' }} >Ver mi Id cliente</Text>
+          </TouchableOpacity>
+        </View>
+
         <ModalVerification
           isVisible={isVisible}
           setIsVisible={setIsVisible}

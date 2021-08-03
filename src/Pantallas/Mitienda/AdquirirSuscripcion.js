@@ -100,6 +100,7 @@ export default function AdquirirSuscripcion() {
 
         if (result.id) {
             setTokenStripe(result.id)
+            console.log(result.id)
         } else {
             console.log('No')
         }

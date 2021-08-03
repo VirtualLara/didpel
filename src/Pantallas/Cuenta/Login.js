@@ -34,10 +34,11 @@ const styles = StyleSheet.create({
     backgroundColor: colorMarca,
   },
   imgLogo: {
-    width: 106,
+    width: '90%',
     height: 106,
     marginTop: 40,
     alignSelf: 'center',
+    resizeMode: 'contain'
   },
   textoBaner: {
     fontFamily: 'Roboto',

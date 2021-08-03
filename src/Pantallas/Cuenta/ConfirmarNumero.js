@@ -92,10 +92,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   imgeLogo: {
-    width: 106,
+    width: '90%',
     height: 106,
-    alignSelf: 'center',
     marginTop: 20,
+    alignSelf: 'center',
+    resizeMode: 'contain'
   },
   text: {
     fontSize: 20,

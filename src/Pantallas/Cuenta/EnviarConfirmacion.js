@@ -106,10 +106,11 @@ const styles = StyleSheet.create({
     backgroundColor: colorMarca
   },
   imglogo: {
-    width: 106,
+    width: '90%',
     height: 106,
-    alignSelf: 'center',
     marginVertical: 40,
+    alignSelf: 'center',
+    resizeMode: 'contain'
   },
   panel: {
     flex: 1,
