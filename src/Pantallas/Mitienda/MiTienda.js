@@ -73,6 +73,14 @@ export default function MiTienda() {
         }}
         reverse
       />
+      {/* <Icon
+        name='cart-plus'
+        type='material-community'
+        color={colorBotonMiTienda}
+        containerStyle={styles.containerBtnSuscription}
+        onPress={() => { navigation.navigate('AdquirirSuscripcion') }}
+        reverse
+      /> */}
     </View>
   );
 }
@@ -202,6 +210,14 @@ function Producto(props) {
 }
 
 const styles = StyleSheet.create({
+  containerBtnSuscription: {
+    position: 'absolute',
+    bottom: 100,
+    left: 10,
+    shadowColor: '#000000',
+    shadowOffset: { width: 2, height: 2 },
+    shadowOpacity: 0.2,
+  },
   containerBtn: {
     position: 'absolute',
     bottom: 10,

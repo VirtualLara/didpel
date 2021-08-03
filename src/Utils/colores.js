@@ -25,3 +25,8 @@ export const publicacionesIniciales = 5;
 //nombre de la app
 export const nombreApp = 'DIDPEL';
 
+//api key publica stripe
+export const STRIPE_PUBLISHABLE_KEY = 'pk_test_51JK6bxLLKx5TJk1F7JvlncaR2MhyC3XucsGhN8GBmdFex1TDQH5XbXTPHc9OFkAi7awekTzORzMyMJW7Rl9Yfyx300n50ssJpp'
+
+// api key secreta stripe
+export const apiKeySecret = 'sk_test_51JK6bxLLKx5TJk1FpEEGCrAO9EzJmZIFwsqUjuoyLWn52uIxDXPe850aJtFkhZY4fer6y9k8lnvgBdAjMHOa8SwB00fxK0v3yD'

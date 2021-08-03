@@ -6,6 +6,8 @@ import Icon from "react-native-vector-icons/FontAwesome";
 
 import { obtenerUsuario, cerrarSesion } from "../Utils/Acciones";
 import { colorMarca, colorBotonMiTienda } from '../Utils/colores';
+import { Alert } from "react-native";
+
 
 export default function CustomDrawerContent(props) {
   const { displayName, photoURL, email } = obtenerUsuario();
@@ -59,11 +61,11 @@ export default function CustomDrawerContent(props) {
               navigation={() => props.navigation.navigate("Vacantes")}
             />
 
-            <DrawerMenu
+            {/* <DrawerMenu
               iconName="plus-square"
               titleName="Oferta de empleo"
               navigation={() => props.navigation.navigate("AgregarVacante")}
-            />
+            /> */}
 
             <DrawerMenu
               iconName="user"
@@ -71,12 +73,11 @@ export default function CustomDrawerContent(props) {
               navigation={() => props.navigation.navigate("Perfil")}
             />
 
-            <DrawerMenu
+            {/*            <DrawerMenu
               iconName="cart-plus"
               titleName="Adquirir Suscripción"
               navigation={() => props.navigation.navigate("AdquirirSuscripcion")}
-            />
-
+            /> */}
 
           </View>
 
@@ -110,7 +111,7 @@ function DrawerMenu(props) {
 
 function DrawerClose(props) {
   return (
-    <TouchableOpacity onPress={() => cerrarSesion()} >
+    <TouchableOpacity onPress={() => cerrarSesionActual()} >
       <View style={styles.viewDrawerMenuClose}>
         <View>
           <Icon style={styles.iconDrawerMenuClose} name={props.iconName} />
@@ -121,6 +122,24 @@ function DrawerClose(props) {
       </View>
     </TouchableOpacity>
   );
+}
+
+function cerrarSesionActual() {
+  Alert.alert('Cerrar sesión',
+    'Esta acción cerrara la sesión actual, ¿desea continuar?',
+    [
+      {
+        styles: 'cancel',
+        text: 'Continuar',
+        onPress: () => {
+          cerrarSesion()
+        }
+      },
+      {
+        styles: 'cancel',
+        text: 'Cancelar',
+      },
+    ])
 }
 
 const styles = StyleSheet.create({

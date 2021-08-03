@@ -21,21 +21,6 @@ const Drawer = createDrawerNavigator();
 
 const TabBar = () => {
     return (
-        /* <Tab.Navigator
-            initialRouteName='tienda'
-            screenOptions={({ route }) => ({
-                tabBarIcon: (color) => mostrarIcono(route, color),
-            })}
-            tabBarOptions={{
-                inactiveTintColor: '#fff',
-                activeTintColor: '#fff',
-                style: {
-                    alignItems: 'center',
-                    backgroundColor: colorMarca,
-                    paddingBottom: 5,
-                }
-            }}
-        > */
 
         <Tab.Navigator activeColor="#fff" barStyle={styles.navigationStyle}
             initialRouteName='tienda'
@@ -119,6 +104,9 @@ export default function RutasAutenticadas() {
         </NavigationContainer>
     );
 }
+
+
+
 
 
 const styles = StyleSheet.create({
