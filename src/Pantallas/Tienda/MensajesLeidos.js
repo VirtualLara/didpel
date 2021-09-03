@@ -46,57 +46,57 @@ export default function MensajesLeidos() {
   );
 
 
-   if (cargando) {
+  if (cargando) {
     if (notificaciones) {
-        return (
-            <View style={{ backgroundColor: "#fff", flex: 1 }}>
-              <Text
-                style={{
-                  fontSize: 20,
-                  color: colorMarca,
-                  fontWeight: "bold",
-                  textAlign: "center",
-                }}
-              >
-                Mensajes leidos{" "}
-              </Text>
-              <FlatList
-                data={notificaciones}
-                renderItem={(item) => (
-                  <Notificacion notificacion={item} navigation={navigation} />
-                )}
-                keyExtractor={(item, index) => index.toString()}
-              />
-            </View>
-          );    
-    } else {
-        return (
-            <View
-              style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-            >
-              <Text
-                style={{
-                  fontSize: 20,
-                  fontWeight: "bold",
-                  color: colorBotonMiTienda,
-                  textAlign: 'center',
-                }}
-              >
-                {mensaje}
-              </Text>
-            </View>
-          );
-    } 
-   } else {
-    return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
-             <ActivityIndicator size={50} color={colorBotonMiTienda} />
-          <Text style={{ fontSize: 20, color: colorBotonMiTienda, fontWeight: 'bold' }} >Obteniendo información...</Text>
+      return (
+        <View style={{ backgroundColor: "#fff", flex: 1 }}>
+          <Text
+            style={{
+              fontSize: 20,
+              color: colorMarca,
+              fontWeight: "bold",
+              textAlign: "center",
+            }}
+          >
+            Mensajes leidos{" "}
+          </Text>
+          <FlatList
+            data={notificaciones}
+            renderItem={(item) => (
+              <Notificacion notificacion={item} navigation={navigation} />
+            )}
+            keyExtractor={(item, index) => index.toString()}
+          />
         </View>
-      )  
-   } 
+      );
+    } else {
+      return (
+        <View
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
+          <Text
+            style={{
+              fontSize: 20,
+              fontWeight: "bold",
+              color: colorBotonMiTienda,
+              textAlign: 'center',
+            }}
+          >
+            {mensaje}
+          </Text>
+        </View>
+      );
+    }
+  } else {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
+        <ActivityIndicator size={50} color={colorBotonMiTienda} />
+        <Text style={{ fontSize: 20, color: colorBotonMiTienda, fontWeight: 'bold' }} >Obteniendo información...</Text>
+      </View>
+    )
+  }
 
-  } 
+}
 
 function Notificacion(props) {
   const { notificacion, navigation } = props;
@@ -113,6 +113,7 @@ function Notificacion(props) {
           photoURL,
           email,
           mensaje,
+          productotitulo,
         });
         actualizarRegistro("Notificaciones", notificacion.item.id, {
           visto: 1,

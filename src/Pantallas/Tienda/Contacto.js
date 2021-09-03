@@ -8,10 +8,9 @@ import { enviarMensajeWhastapp } from '../../Utils/Utils';
 export default function Contacto(props) {
 
   const { route } = props;
-  console.log(route)
-  const { displayName, phoneNumber, photoURL, email, mensaje } = route.params;
+  const { displayName, phoneNumber, photoURL, email, mensaje, productotitulo } = route.params;
 
-  const mensajeNoti = `Hola ${displayName}. Te escribo desde ${nombreApp}, me dejaste un mensaje acerca de una de mis publicaciones.`
+  const mensajeNoti = `Hola *${displayName}*. Te escribo desde *${nombreApp}*, me dejaste un mensaje acerca de mi publicación *${productotitulo}*, dime en que te puedo apoyar.`
 
   return (
     <View style={styles.container} >

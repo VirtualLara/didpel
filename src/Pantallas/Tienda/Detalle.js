@@ -144,7 +144,7 @@ export default function Detalle(props) {
                   color={colorBotonMiTienda}
                   size={50}
                   onPress={() => {
-                    const mensajeWhastApp = `Estimad@ ${nombreVendedor}, mi nombre es ${usuarioActual.displayName}, me interesa el producto ${upperCase(producto.titulo)} que se encuentra publicado en la aplicación ${nombreApp}.`;
+                    const mensajeWhastApp = `Estimad@ *${nombreVendedor}*, mi nombre es *${usuarioActual.displayName}*, me interesa el producto *${upperCase(producto.titulo)}* que se encuentra publicado en la aplicación *${nombreApp}*.`;
                     enviarMensajeWhastapp(phoneVendedor, mensajeWhastApp);
                   }}
                 />
