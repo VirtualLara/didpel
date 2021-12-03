@@ -25,17 +25,17 @@ const TabBar = () => {
             <Tab.Screen
                 component={DirectorioMiColonia}
                 name='DirectorioMiColonia'
-                options={{ title: 'Anunciantes en mi colonia' }}
+                options={{ title: 'Mi colonia' }}
             />
             <Tab.Screen
                 component={DirectorioMiCiudad}
                 name='DirectorioMiCiudad'
-                options={{ title: 'Anunciantes en mi ciudad', }}
+                options={{ title: 'Mi ciudad', }}
             />
             <Tab.Screen
                 component={Directorio}
                 name='Directorio'
-                options={{ title: 'Todos los anunciantes', }}
+                options={{ title: 'Todos', }}
             />
         </Tab.Navigator>
     )

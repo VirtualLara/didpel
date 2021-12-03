@@ -135,13 +135,16 @@ export default function PublicacionesPorAnunciante(props) {
         );
     } else {
         return (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
-                <ActivityIndicator
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }} >
+                {/* <ActivityIndicator
                     size={50}
                     color={colorBotonMiTienda}
-                />
+                /> */}
 
-                <Text style={{ fontSize: 20, color: colorBotonMiTienda, fontWeight: 'bold' }} >Obteniendo información...</Text>
+                <Text style={{ fontSize: 20, color: colorBotonMiTienda, fontWeight: 'bold', textAlign: 'center' }} >No hay publicaciones para este anunciante en este momento...</Text>
+
+
+
             </View>
         )
     }

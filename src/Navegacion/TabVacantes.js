@@ -25,17 +25,17 @@ const TabBar = () => {
             <Tab.Screen
                 component={VacantesMiColonia}
                 name='VacantesMiColonia'
-                options={{ title: 'Empleo en mi colonia' }}
+                options={{ title: 'Mi colonia' }}
             />
             <Tab.Screen
                 component={VacantesMiCiudad}
                 name='VacantesMiCiudad'
-                options={{ title: 'Empleo en mi ciudad', }}
+                options={{ title: 'Mi ciudad', }}
             />
             <Tab.Screen
                 component={Vacantes}
                 name='Vacantes'
-                options={{ title: 'Todas los Empleos', }}
+                options={{ title: 'Todos', }}
             />
         </Tab.Navigator>
     )

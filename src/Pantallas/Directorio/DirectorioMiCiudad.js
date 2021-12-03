@@ -119,12 +119,12 @@ const AnuncianteData = (props) => {
                 </View>
 
                 <View style={{ width: '80%' }} >
-                    <Text style={{ fontSize: 20, color: colorMarca, fontWeight: 'bold', paddingLeft: 18, }} >Empresa - Anunciante: </Text>
-                    <Text style={{ fontSize: 20, color: colorBotonMiTienda, fontWeight: 'bold', paddingLeft: 18, }} >{displayName}</Text>
+                    <Text style={{ fontSize: 20, color: colorMarca, fontWeight: 'bold', paddingLeft: 5, }} >Empresa - Anunciante: </Text>
+                    <Text style={{ fontSize: 14, color: colorBotonMiTienda, fontWeight: 'bold', paddingLeft: 5, }} >{displayName}</Text>
 
-                    <View style={{ width: '80%', flexDirection: 'row' }} >
-                        <Text style={{ fontSize: 20, color: colorMarca, fontWeight: 'bold', paddingLeft: 18, }} >Cd. </Text>
-                        <Text style={{ fontSize: 20, color: colorBotonMiTienda, fontWeight: 'bold', paddingLeft: 18, }} >{ciudad}</Text>
+                    <View style={{ width: '80%', flexDirection: 'row', alignItems: 'center' }} >
+                        <Text style={{ fontSize: 20, color: colorMarca, fontWeight: 'bold', paddingLeft: 5, }} >Cd. </Text>
+                        <Text style={{ fontSize: 16, color: colorBotonMiTienda, fontWeight: 'bold', paddingLeft: 5, }} >{ciudad}</Text>
                     </View>
 
                 </View>
