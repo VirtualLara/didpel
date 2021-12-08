@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Alert, Picker, } from 'react-native';
+import { Button } from 'react-native-elements';
 import { TextInput, } from 'react-native-paper';
 import { map, size } from 'lodash';
 
-import { colorMarca, colorBotonMiTienda, STRIPE_PUBLISHABLE_KEY, } from '../../Utils/colores';
+import { colorMarca, colorBotonMiTienda, STRIPE_PUBLISHABLE_KEY, colorIconTabMensajes, } from '../../Utils/colores';
 import { formatoMoneda } from '../../Utils/Utils';
 import { obtenerUsuario } from '../../Utils/Acciones';
 
@@ -60,8 +61,57 @@ export default function AdquirirSuscripcion() {
     const [numCvc, setNumCvc] = useState('');
     const [nombre, setNombre] = useState('');
     const [tokenStripe, setTokenStripe] = useState('');
+    const [pickerSelected, setPickerSelected] = useState('');
     const infoUser = obtenerUsuario();
     const userUID = infoUser.uid;
+
+    const llenarInformacionPaquete = (opc) => {
+
+        switch (opc) {
+            case 'P01PUB':
+                setClave('P01PUB');
+                setCantidad(1);
+                setPrecio(30);
+                break;
+
+            case 'P04PUB':
+                setClave('P04PUB');
+                setCantidad(4);
+                setPrecio(110);
+                break;
+
+            case 'P08PUB':
+                setClave('P08PUB');
+                setCantidad(8);
+                setPrecio(210);
+                break;
+
+            case 'P10PUB':
+                setClave('P10PUB');
+                setCantidad(10);
+                setPrecio(250);
+                break;
+
+            case 'P15PUB':
+                setClave('P15PUB');
+                setCantidad(15);
+                setPrecio(350);
+                break;
+
+            case 'P28PUB':
+                setClave('P28PUB');
+                setCantidad(28);
+                setPrecio(600);
+                break;
+
+            default:
+                setClave('');
+                setCantidad(0);
+                setPrecio(0);
+                break;
+        }
+
+    }
 
     const crearAcuerdoPago = async () => {
 
@@ -99,10 +149,11 @@ export default function AdquirirSuscripcion() {
         }
 
         if (result.id) {
-            setTokenStripe(result.id)
-            console.log(result.id)
+            setTokenStripe(result.id);
+            console.log(result.id);
+            Alert.alert('Mi token de pago es: ' + result.id);
         } else {
-            console.log('No')
+            console.log('No se han llenado los campos correspondientes, NO SE CREO EL TOKEN');
         }
 
     }
@@ -117,80 +168,90 @@ export default function AdquirirSuscripcion() {
     }
 
     return (
-        <ScrollView>
-            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
 
-                {map(paquetes, (paquete, index) => (
-                    <TouchableOpacity style={styles.container} key={index} onPress={() => { setClave(paquete.clave), setCantidad(paquete.cantidad), setPrecio(paquete.precio) }} >
-                        <View style={styles.content} >
-                            <Text style={styles.titulo} >Clave: </Text>
-                            <Text style={styles.subtitulo} >{paquete.clave}</Text>
-                        </View>
-                        <View style={styles.content} >
-                            <Text style={styles.titulo} >Cantidad: </Text>
-                            <Text style={styles.subtitulo} >{paquete.cantidad}</Text>
-                            <Text style={styles.titulo} > publicacion(es)</Text>
-                        </View>
-                        <View style={styles.content} >
-                            <Text style={styles.titulo} >Precio: </Text>
-                            <Text style={styles.subtitulo} >{formatoMoneda(paquete.precio)}</Text>
-                            <View>
+        <View>
 
-                            </View>
-                        </View>
-                    </TouchableOpacity>
-                ))}
+            <View style={{ margin: 10, backgroundColor: '#D5D8DC', }}>
+                <Picker selectedValue={pickerSelected} style={{ height: 50, width: '100%', }}
+                    onValueChange={(itemValue, itemIndex) => { setPickerSelected(itemValue), llenarInformacionPaquete(itemValue) }} >
+                    <Picker.Item label="Selecciona un opción" value="" />
+                    <Picker.Item label="Paq. 1 publicación - $30.00" value="P01PUB" />
+                    <Picker.Item label="Paq. 4 publicaciones  - $110.00" value="P04PUB" />
+                    <Picker.Item label="Paq. 8 publicaciones  - $210.00" value="P08PUB" />
+                    <Picker.Item label="Paq. 10 publicaciones  - $250.00" value="P10PUB" />
+                    <Picker.Item label="Paq. 15 publicaciones  - $350.00" value="P15PUB" />
+                    <Picker.Item label="Paq. 28 publicaciones  - $600.00" value="P28PUB" />
+                </Picker>
+            </View>
 
-                <View style={styles.contentCardView} >
-                    <Text style={styles.title} >Forma de pago</Text>
+            <View>
 
-                    <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center', }} >
-                        <View style={styles.contentCard} >
-
-                            <TextInput label='Nombre de la tarjeta' style={styles.input}
-                                value={nombre}
-                                onChangeText={(text) => setNombre(text)}
-                            />
-
-                            <TextInput label='Numero de la tarjeta' style={styles.input}
-                                keyboardType='numeric'
-                                value={numTarjeta}
-                                onChangeText={(text) => setNumTarjeta(text)}
-                            />
-
-                            <View style={styles.containerInputs} >
-                                <View style={styles.containerFecha} >
-                                    <TextInput label='Mes (MM)' style={styles.inputDate}
-                                        value={mes}
-                                        keyboardType='numeric'
-                                        onChangeText={(text) => setMes(text)}
-                                    />
-
-                                    <TextInput label='Año (YY)' style={styles.inputDate}
-                                        value={año}
-                                        keyboardType='numeric'
-                                        onChangeText={(text) => setAño(text)}
-                                    />
-                                </View>
-                                <TextInput label='CW/CVC' style={styles.inputCvc}
-                                    value={numCvc}
-                                    keyboardType='numeric'
-                                    onChangeText={(text) => setNumCvc(text)}
-                                />
-                            </View>
-
-                        </View>
-                    </View>
+                <View style={{ margin: 10 }} >
+                    <Text style={{ fontWeight: 'bold', fontSize: 20, color: colorMarca }} >Usted ha seleccionado el plan:</Text>
                 </View>
 
-                <TouchableOpacity onPress={() => crearAcuerdoPago()}>
-                    <View style={{ height: 100, justifyContent: 'center', alignItems: 'center' }} >
-                        <Text> Pagar ---- </Text>
-                    </View>
-                </TouchableOpacity>
+                <View style={styles.content} >
+                    <Text style={styles.titulo} >Clave: </Text>
+                    <Text style={styles.subtitulo} >{clave}</Text>
+                </View>
 
+                <View style={styles.content} >
+                    <Text style={styles.titulo} >Cantidad: </Text>
+                    <Text style={styles.subtitulo} >{cantidad}</Text>
+                    <Text style={styles.titulo} > publicación(es)</Text>
+                </View>
+
+                <View style={styles.content} >
+                    <Text style={styles.titulo} >Precio: </Text>
+                    <Text style={styles.subtitulo} >{formatoMoneda(precio)}</Text>
+                </View>
             </View>
-        </ScrollView>
+
+            <View style={styles.contentCardView} >
+                <Text style={styles.title} >Forma de pago:</Text>
+
+                <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center', }} >
+                    <View style={styles.contentCard} >
+
+                        <TextInput label='Nombre del titular' style={styles.input}
+                            value={nombre}
+                            onChangeText={(text) => setNombre(text)}
+                        />
+
+                        <TextInput label='Número de tarjeta' style={styles.input}
+                            keyboardType='numeric'
+                            value={numTarjeta}
+                            onChangeText={(text) => setNumTarjeta(text)}
+                        />
+
+                        <View style={styles.containerInputs} >
+                            <View style={styles.containerFecha} >
+                                <TextInput label='Mes (MM)' style={styles.inputDate}
+                                    value={mes}
+                                    keyboardType='numeric'
+                                    onChangeText={(text) => setMes(text)}
+                                />
+
+                                <TextInput label='Año (YY)' style={styles.inputDate}
+                                    value={año}
+                                    keyboardType='numeric'
+                                    onChangeText={(text) => setAño(text)}
+                                />
+                            </View>
+                            <TextInput label='CW/CVC' style={styles.inputCvc}
+                                value={numCvc}
+                                keyboardType='numeric'
+                                onChangeText={(text) => setNumCvc(text)}
+                            />
+                        </View>
+
+                    </View>
+                </View>
+            </View>
+
+            <Button title='Pagar' buttonStyle={styles.btnAddNew} onPress={() => crearAcuerdoPago()} />
+
+        </View>
     )
 }
 
@@ -232,6 +293,7 @@ const styles = StyleSheet.create({
     },
     title: {
         paddingBottom: 10,
+        textAlign: 'center',
         fontSize: 20,
         fontWeight: 'bold',
         color: '#000'
@@ -273,5 +335,11 @@ const styles = StyleSheet.create({
     btnText: {
         fontWeight: 'bold',
         fontSize: 20,
-    }
+    },
+    btnAddNew: {
+        backgroundColor: colorMarca,
+        marginTop: 20,
+        marginBottom: 20,
+        marginHorizontal: 20,
+    },
 })

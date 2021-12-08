@@ -27,7 +27,6 @@ export default function DirectorioMiColonia() {
             (async () => {
                 setList(await listarAnunciantesMiColonia())
             })()
-            console.log(list)
         }, [])
     )
 
@@ -95,7 +94,6 @@ export default function DirectorioMiColonia() {
 const AnuncianteData = (props) => {
 
     const { photoURL, displayName, colonia } = props;
-    console.log(props)
 
     return (
         <View style={{ width: '95%', height: 100, borderWidth: 1, borderColor: colorMarca, borderRadius: 40, paddingTop: 5 }} >

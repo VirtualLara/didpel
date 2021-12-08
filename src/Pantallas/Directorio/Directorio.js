@@ -28,7 +28,6 @@ export default function Directorio() {
             (async () => {
                 setList(await listarAnunciantes())
             })()
-            console.log(list)
         }, [])
     )
 
@@ -96,7 +95,6 @@ export default function Directorio() {
 const AnuncianteData = (props) => {
 
     const { photoURL, displayName, ciudad } = props;
-    console.log(props)
 
     return (
         <View style={{ width: '95%', height: 100, borderWidth: 1, borderColor: colorMarca, borderRadius: 40, paddingTop: 5 }} >
