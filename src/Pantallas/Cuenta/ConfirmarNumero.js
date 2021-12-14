@@ -66,7 +66,7 @@ export default function ConfirmarNumero(props) {
           inactiveColor='#fff'
           autofocus={true}
           inputPosition='center'
-          size={50}
+          size={45}
           codeLength={6}
           //secureTextEntry
           keyboardType="numeric"
