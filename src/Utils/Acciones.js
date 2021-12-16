@@ -5,7 +5,7 @@ import Constants from "expo-constants";
 import * as Notifications from "expo-notifications";
 import "firebase/firestore";
 import uuid from "random-uuid-v4";
-import { map, orderBy } from "lodash";
+import { map, } from "lodash";
 import { FireSQL } from "firesql";
 import moment from 'moment/min/moment-with-locales'
 

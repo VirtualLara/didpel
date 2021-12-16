@@ -5,7 +5,7 @@ import SwitchNavigator from './src/Navegacion/SwitchNavigator';
 import { validarSesion, iniciarNotificaciones } from "./src/Utils/Acciones";
 import Loading from "./src/Componentes/Loading";
 
-import ConfirmarNumero from './src/Pantallas/Cuenta/ConfirmarNumero'
+import ConfirmarNumero from './src/Pantallas/Cuenta/ConfirmarNumero';
 
 //ignora los warning amarillos
 LogBox.ignoreLogs(['Setting a timer'])

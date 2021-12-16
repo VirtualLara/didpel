@@ -34,9 +34,11 @@ export default function RegisterForm(props) {
       firebase
         .auth()
         .createUserWithEmailAndPassword(email, password)
-        .then((respose) => {
-          toastRef.current.show('Registro exitoso...');
+        .then((respose, userCredential) => {
+          let user = userCredential.user;
+          console.log(user)
           setLoading(false);
+          toastRef.current.show('Registro exitoso...');
         })
         .catch((err) => {
           setLoading(false);

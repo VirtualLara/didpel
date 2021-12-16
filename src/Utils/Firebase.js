@@ -1,6 +1,7 @@
 import firebase from 'firebase/app';
+//import { initializeApp } from 'firebase/app';
 
-var firebaseConfig = {
+const firebaseConfig = {
   apiKey: "AIzaSyCkgct0-_sPc8Iz0dngFqWvKFGUz5NqynA",
   authDomain: "didpel-50fe0.firebaseapp.com",
   projectId: "didpel-50fe0",
@@ -11,3 +12,4 @@ var firebaseConfig = {
 
 // Initialize Firebase
 export const firebaseapp = firebase.initializeApp(firebaseConfig);
+//export const firebaseapp = initializeApp(firebaseConfig);
